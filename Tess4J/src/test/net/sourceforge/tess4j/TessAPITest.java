@@ -15,13 +15,6 @@
  */
 package test.net.sourceforge.tess4j;
 
-import static net.sourceforge.lept4j.ILeptonica.L_CLONE;
-import static net.sourceforge.tess4j.ITessAPI.FALSE;
-import static net.sourceforge.tess4j.ITessAPI.TRUE;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -31,7 +24,6 @@ import java.nio.ByteBuffer;
 import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -43,7 +35,6 @@ import net.sourceforge.tess4j.ITessAPI;
 import net.sourceforge.tess4j.ITessAPI.ETEXT_DESC;
 import net.sourceforge.tess4j.ITessAPI.TessBaseAPI;
 import net.sourceforge.tess4j.ITessAPI.TessChoiceIterator;
-import net.sourceforge.tess4j.ITessAPI.TessMutableIterator;
 import net.sourceforge.tess4j.ITessAPI.TessOcrEngineMode;
 import net.sourceforge.tess4j.ITessAPI.TessOrientation;
 import net.sourceforge.tess4j.ITessAPI.TessPageIterator;
