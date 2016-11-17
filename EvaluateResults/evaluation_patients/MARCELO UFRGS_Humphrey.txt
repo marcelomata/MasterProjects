@@ -1,0 +1,2 @@
+MSE Humphrey Left = 3.492849839314596
+MSE Humphrey Right = -5.830951894845301

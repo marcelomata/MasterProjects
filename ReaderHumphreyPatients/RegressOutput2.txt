@@ -1,0 +1,101 @@
+This file, RegressOutput.txt, was created at 04:48:58 on 25/10/2016
+ 
+Unweighted Least Squares Minimisation
+Fitting to a Sigmoidal Threshold Function
+y = yscale/(1 + exp(-slopeTerm(x - theta)))
+Nelder and Mead Simplex used to fit the data
+Initial estimates were calculated internally
+
+Estimated parameters
+The statistics are obtained assuming that the model behaves as a linear model about the minimum.
+The Hessian matrix is calculated as the numerically derived second derivatives of chi square with respect to all pairs of parameters.
+Consequentlty treat the statistics with great caution
+Hessian matrix is singular
+ - variances cannot be calculated
+ - may not be at a minimum  or the model may be so non-linear that the linear approximation in calculating the statisics is invalid
+ 
+The ordinate scaling factor [yscale, Ao] has been set equal to 1.0
+ 
+             	Best
+             	estimate
+   
+slope term   	71.4047
+theta        	2.0302
+
+             	Best         	Pre-min      	Post-min     	Initial      	Fractional   	Scaling
+             	estimate     	gradient     	gradient     	estimate     	step         	factor
+slope term   	71.4047      	0.0          	0.0          	59.5039      	5.9504       	1.0
+theta        	2.0302       	0.0          	0.0          	4.0604       	0.406        	1.0
+
+Calculated estimate of the maximum gradient =  17.8512
+
+yscale       	1.0
+
+x0           	y(expl)      	y(calc)      	weight       	residual     	residual
+             	             	             	             	(unweighted) 	(weighted)
+4.0255       	531026.0     	1.0          	1.0          	-531025.0    	-531025.0
+4.0281       	664002.0     	1.0          	1.0          	-664001.0    	-664001.0
+4.0293       	787079.0     	1.0          	1.0          	-787078.0    	-787078.0
+4.0313       	984167.0     	1.0          	1.0          	-984166.0    	-984166.0
+4.0339       	1294546.0    	1.0          	1.0          	-1294545.0   	-1294545.0
+4.0358       	1560230.0    	1.0          	1.0          	-1560229.0   	-1560229.0
+4.0384       	1887233.0    	1.0          	1.0          	-1887232.0   	-1887232.0
+4.0397       	2113240.0    	1.0          	1.0          	-2113239.0   	-2113239.0
+4.0416       	2375211.0    	1.0          	1.0          	-2375210.0   	-2375210.0
+4.0442       	2687152.0    	1.0          	1.0          	-2687151.0   	-2687151.0
+4.0455       	2862644.0    	1.0          	1.0          	-2862643.0   	-2862643.0
+4.0475       	3078898.0    	1.0          	1.0          	-3078897.0   	-3078897.0
+4.05         	3327238.0    	1.0          	1.0          	-3327237.0   	-3327237.0
+4.0513       	3461228.0    	1.0          	1.0          	-3461227.0   	-3461227.0
+4.0533       	3580526.0    	1.0          	1.0          	-3580525.0   	-3580525.0
+4.0559       	3576946.0    	1.0          	1.0          	-3576945.0   	-3576945.0
+4.0578       	3439750.0    	1.0          	1.0          	-3439749.0   	-3439749.0
+4.0604       	3220296.0    	1.0          	1.0          	-3220295.0   	-3220295.0
+4.0617       	3070073.0    	1.0          	1.0          	-3070072.0   	-3070072.0
+4.0636       	2877648.0    	1.0          	1.0          	-2877647.0   	-2877647.0
+4.0662       	2595848.0    	1.0          	1.0          	-2595847.0   	-2595847.0
+4.0675       	2390157.0    	1.0          	1.0          	-2390156.0   	-2390156.0
+4.0694       	2175960.0    	1.0          	1.0          	-2175959.0   	-2175959.0
+4.072        	1895104.0    	1.0          	1.0          	-1895103.0   	-1895103.0
+4.0733       	1687576.0    	1.0          	1.0          	-1687575.0   	-1687575.0
+4.0753       	1447024.0    	1.0          	1.0          	-1447023.0   	-1447023.0
+4.0778       	1130879.0    	1.0          	1.0          	-1130878.0   	-1130878.0
+4.0798       	904900.0     	1.0          	1.0          	-904899.0    	-904899.0
+4.0824       	717104.0     	1.0          	1.0          	-717103.0    	-717103.0
+4.0837       	620014.0     	1.0          	1.0          	-620013.0    	-620013.0
+
+Sum of squares of the unweighted residuals	1.6228E14
+ 
+Correlation: x - y data
+Linear Correlation Coefficient (R)	0.0303
+Linear Correlation Coefficient Probability	0.4369
+ 
+Correlation: y(experimental) - y(calculated)
+Linear Correlation Coefficient	NaN
+Linear Correlation Coefficient Probability	NaN
+ 
+Degrees of freedom	28
+Number of data points	30
+Number of estimated paramaters	2
+
+
+Coefficient of determination, R =                   0.0
+Adjusted Coefficient of determination, R' =         -0.0357
+Coefficient of determination, F-ratio =             0.0
+Coefficient of determination, F-ratio probability = 1.0
+Total (weighted) sum of squares  =                  3.0211E13
+Regression (weighted) sum of squares  =             0.0
+Error (weighted) sum of squares  =                  1.6228E14
+
+
+Number of iterations taken	6
+Maximum number of iterations allowed	3000
+Number of restarts taken	3
+Maximum number of restarts allowed	3
+Standard deviation of the simplex at the minimum	0.0
+Convergence tolerance	1.0E-9
+simplex sd < the tolerance times the mean of the absolute values of the y values
+Step used in numerical differentiation to obtain Hessian matrix
+d(parameter) = parameter*1.0E-4
+
+End of file

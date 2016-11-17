@@ -20,5 +20,6 @@
 	<classpathentry kind="lib" path="lib/rococoa-core-0.5.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.21.jar"/>
 	<classpathentry kind="lib" path="lib/xmlgraphics-commons-1.5.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Zoso10OCR"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

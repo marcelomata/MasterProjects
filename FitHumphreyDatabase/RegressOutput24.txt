@@ -1,0 +1,84 @@
+This file, RegressOutput.txt, was created at 06:18:36 on 31/10/2016
+ 
+Unweighted Least Squares Minimisation
+Fitting to a Sigmoidal Threshold Function
+y = yscale/(1 + exp(-slopeTerm(x - theta)))
+Nelder and Mead Simplex used to fit the data
+Initial estimates were calculated internally
+
+Estimated parameters
+The statistics are obtained assuming that the model behaves as a linear model about the minimum.
+The Hessian matrix is calculated as the numerically derived second derivatives of chi square with respect to all pairs of parameters.
+Consequentlty treat the statistics with great caution
+ 
+             	Best         	Estimate of  	Coefficient  	t-value      	p-value
+             	estimate     	the error    	of           	t            	P > |t|
+             	             	             	variation (%)
+slope term   	4.5498       	34.3577      	755.1557     	0.1324       	0.8984
+theta        	22.4829      	3.6469       	16.2207      	6.165        	4.6074E-4
+y scale      	50.0001      	0.2117       	0.4235       	236.1488     	6.4393E-15
+
+             	Best         	Pre-min      	Post-min     	Initial      	Fractional   	Scaling
+             	estimate     	gradient     	gradient     	estimate     	step         	factor
+slope term   	4.5498       	-0.0023      	0.002        	0.1948       	0.0195       	1.0
+theta        	22.4829      	-0.9516      	0.9334       	22.0         	2.2          	1.0
+y scale      	50.0001      	-0.0201      	0.02         	50.0         	5.0          	1.0
+
+Calculated estimate of the maximum gradient =  56.872
+
+yscale       	1.0          	0.0          	0.0          	0.0          	0.0
+
+x0           	y(expl)      	y(calc)      	weight       	residual     	residual
+             	             	             	             	(unweighted) 	(weighted)
+0.0          	0.5          	1.8803E-43   	1.0          	-0.5         	-0.5
+2.0          	0.5          	1.683E-39    	1.0          	-0.5         	-0.5
+11.0         	0.5          	1.0221E-21   	1.0          	-0.5         	-0.5
+11.0         	0.5          	1.0221E-21   	1.0          	-0.5         	-0.5
+12.0         	0.5          	9.6696E-20   	1.0          	-0.5         	-0.5
+22.0         	5.0          	5.0          	1.0          	3.3304E-5    	3.3304E-5
+25.0         	50.0         	49.9996      	1.0          	-4.014E-4    	-4.014E-4
+31.0         	50.0         	50.0001      	1.0          	1.2999E-4    	1.2999E-4
+39.0         	50.0         	50.0001      	1.0          	1.2999E-4    	1.2999E-4
+45.0         	50.0         	50.0001      	1.0          	1.2999E-4    	1.2999E-4
+
+Sum of squares of the unweighted residuals	1.25
+ 
+Correlation: x - y data
+Linear Correlation Coefficient (R)	0.8742
+Linear Correlation Coefficient Probability	4.6979E-4
+ 
+Correlation: y(experimental) - y(calculated)
+Linear Correlation Coefficient	1.0
+Linear Correlation Coefficient Probability	1.1681E-19
+ 
+Degrees of freedom	7
+Number of data points	10
+Number of estimated paramaters	3
+
+Parameter - parameter correlation coefficients
+             	slope term   	theta        	y scale      	
+slope term   	1.0          	-1.0         	-0.0646      	
+theta        	-1.0         	1.0          	0.0648       	
+y scale      	-0.0646      	0.0648       	1.0          	
+
+
+Coefficient of determination, R =                   0.9998
+Adjusted Coefficient of determination, R' =         0.9998
+Coefficient of determination, F-ratio =             36603.9938
+Coefficient of determination, F-ratio probability = 6.2339E-16
+Total (weighted) sum of squares  =                  5720.625
+Regression (weighted) sum of squares  =             5719.375
+Error (weighted) sum of squares  =                  1.25
+
+
+Number of iterations taken	1043
+Maximum number of iterations allowed	3000
+Number of restarts taken	3
+Maximum number of restarts allowed	3
+Standard deviation of the simplex at the minimum	7.9391E-10
+Convergence tolerance	1.0E-9
+simplex sd < the tolerance times the mean of the absolute values of the y values
+Step used in numerical differentiation to obtain Hessian matrix
+d(parameter) = parameter*1.0E-4
+
+End of file

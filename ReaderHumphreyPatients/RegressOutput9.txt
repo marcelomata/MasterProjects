@@ -1,0 +1,107 @@
+This file, RegressOutput.txt, was created at 05:38:45 on 25/10/2016
+ 
+Unweighted Least Squares Minimisation
+Fitting to a Normal (Gaussian) distribution
+y = (yscale/(sd.sqrt(2.pi)).exp(0.5.square((x-mean)/sd))
+Nelder and Mead Simplex used to fit the data
+Initial estimates were calculated internally
+
+Convergence criterion was not satisfied
+The following results are, or are derived from, the current estimates on exiting the regression method
+
+Estimated parameters
+The statistics are obtained assuming that the model behaves as a linear model about the minimum.
+The Hessian matrix is calculated as the numerically derived second derivatives of chi square with respect to all pairs of parameters.
+Consequentlty treat the statistics with great caution
+ 
+             	Best         	Estimate of  	Coefficient  	t-value      	p-value
+             	estimate     	the error    	of           	t            	P > |t|
+             	             	             	variation (%)
+mean         	4.0549       	8.6803E-5    	0.0021       	46714.4019   	0.0
+sd           	0.015        	9.6155E-5    	0.6394       	156.4083     	0.0
+y scale      	131829.3424  	685.2897     	0.5198       	192.3702     	0.0
+
+             	Best         	Pre-min      	Post-min     	Initial      	Fractional   	Scaling
+             	estimate     	gradient     	gradient     	estimate     	step         	factor
+mean         	4.0549       	-1.4002E14   	1.3999E14    	4.0533       	0.0049       	1.0
+sd           	0.015        	-7.1321E11   	7.1297E11    	0.0494       	0.0049       	1.0
+y scale      	131829.3424  	-123042.2899 	123040.2402  	443240.3672  	44324.0367   	1.0
+
+Calculated estimate of the peak value =  3496978.182, error = 28815.5164
+
+yscale       	1.0          	0.0          	0.0          	0.0          	0.0
+
+x0           	y(expl)      	y(calc)      	weight       	residual     	residual
+             	             	             	             	(unweighted) 	(weighted)
+4.0255       	531026.0     	512695.5011  	1.0          	-18330.4989  	-18330.4989
+4.0281       	664002.0     	707639.7887  	1.0          	43637.7887   	43637.7887
+4.0293       	787079.0     	822186.5646  	1.0          	35107.5646   	35107.5646
+4.0313       	984167.0     	1015512.6955 	1.0          	31345.6955   	31345.6955
+4.0339       	1294546.0    	1311384.9116 	1.0          	16838.9116   	16838.9116
+4.0358       	1560230.0    	1558052.9912 	1.0          	-2177.0089   	-2177.0089
+4.0384       	1887233.0    	1910481.2685 	1.0          	23248.2685   	23248.2685
+4.0397       	2113240.0    	2092209.2093 	1.0          	-21030.7907  	-21030.7907
+4.0416       	2375211.0    	2364701.2578 	1.0          	-10509.7422  	-10509.7422
+4.0442       	2687152.0    	2712871.9607 	1.0          	25719.9607   	25719.9607
+4.0455       	2862644.0    	2873675.4783 	1.0          	11031.4783   	11031.4783
+4.0475       	3078898.0    	3089783.0671 	1.0          	10885.0671   	10885.0671
+4.05         	3327238.0    	3316447.2275 	1.0          	-10790.7725  	-10790.7725
+4.0513       	3461228.0    	3398033.1862 	1.0          	-63194.8139  	-63194.8139
+4.0533       	3580526.0    	3475657.5245 	1.0          	-104868.4755 	-104868.4755
+4.0559       	3576946.0    	3490391.694  	1.0          	-86554.306   	-86554.306
+4.0578       	3439750.0    	3434160.9258 	1.0          	-5589.0742   	-5589.0742
+4.0604       	3220296.0    	3274718.2027 	1.0          	54422.2027   	54422.2027
+4.0617       	3070073.0    	3162515.427  	1.0          	92442.427    	92442.427
+4.0636       	2877648.0    	2960044.2588 	1.0          	82396.2588   	82396.2588
+4.0662       	2595848.0    	2640849.0869 	1.0          	45001.0869   	45001.0869
+4.0675       	2390157.0    	2466882.1499 	1.0          	76725.1499   	76725.1499
+4.0694       	2175960.0    	2196509.3093 	1.0          	20549.3093   	20549.3093
+4.072        	1895104.0    	1833456.0975 	1.0          	-61647.9025  	-61647.9025
+4.0733       	1687576.0    	1656614.4054 	1.0          	-30961.5946  	-30961.5946
+4.0753       	1447024.0    	1403218.084  	1.0          	-43805.916   	-43805.916
+4.0778       	1130879.0    	1095860.2337 	1.0          	-35018.7664  	-35018.7664
+4.0798       	904900.0     	892885.9823  	1.0          	-12014.0177  	-12014.0177
+4.0824       	717104.0     	662127.5537  	1.0          	-54976.4463  	-54976.4463
+4.0837       	620014.0     	563893.0906  	1.0          	-56120.9094  	-56120.9094
+
+Sum of squares of the unweighted residuals	7.022E10
+ 
+Correlation: x - y data
+Linear Correlation Coefficient (R)	0.0303
+Linear Correlation Coefficient Probability	0.4369
+ 
+Correlation: y(experimental) - y(calculated)
+Linear Correlation Coefficient	0.9988
+Linear Correlation Coefficient Probability	9.2481E-39
+ 
+Degrees of freedom	27
+Number of data points	30
+Number of estimated paramaters	3
+
+Parameter - parameter correlation coefficients
+             	mean         	sd           	y scale      	
+mean         	1.0          	0.0173       	0.012        	
+sd           	0.0173       	1.0          	0.6377       	
+y scale      	0.012        	0.6377       	1.0          	
+
+
+Coefficient of determination, R =                   0.9977
+Adjusted Coefficient of determination, R' =         0.9976
+Coefficient of determination, F-ratio =             12018.5361
+Coefficient of determination, F-ratio probability = 2.0095E-38
+Total (weighted) sum of squares  =                  3.0211E13
+Regression (weighted) sum of squares  =             3.0141E13
+Error (weighted) sum of squares  =                  7.022E10
+
+
+Number of iterations taken	3001
+Maximum number of iterations allowed	3000
+Number of restarts taken	0
+Maximum number of restarts allowed	3
+Standard deviation of the simplex at the minimum	0.0
+Convergence tolerance	1.0E-9
+simplex sd < the tolerance times the mean of the absolute values of the y values
+Step used in numerical differentiation to obtain Hessian matrix
+d(parameter) = parameter*1.0E-4
+
+End of file

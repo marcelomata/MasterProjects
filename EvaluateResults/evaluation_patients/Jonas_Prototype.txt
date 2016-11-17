@@ -1,0 +1,2 @@
+MSE Prototype Left = -4.077744726174007
+MSE Prototype Right = 2.63817281996275
