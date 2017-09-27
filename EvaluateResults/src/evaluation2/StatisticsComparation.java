@@ -104,6 +104,21 @@ public class StatisticsComparation {
 		return error1*error2;
 	}
 	
+	public static double SQ_Total(double[][] field1, double[][] means, boolean leftSide) {
+		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
+		
+		double sqtotal = 0;
+		for (int i = 0; i < field1.length; i++) {
+			for (int j = 0; j < field1[i].length; j++) {
+				if(map[i][j] == 'y') {
+					sqtotal = Math.pow(field1[i][j] - means[i][j], 2);
+				}
+			}
+		}
+		
+		return sqtotal;
+	}
+	
 	public static double EV(double[][] field1, double[][] field2, double[][] variances2, boolean leftSide) {
 		double error1 = 0;
 		double error2 = 0;
