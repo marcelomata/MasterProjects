@@ -1,2 +1,2 @@
-SQ_total Humphrey Left = [D@6ff3c5b5
-SQ_total Humphrey Right = [D@6ff3c5b5
+SQ_total Humphrey Left = [D@355da254
+SQ_total Humphrey Right = [D@355da254

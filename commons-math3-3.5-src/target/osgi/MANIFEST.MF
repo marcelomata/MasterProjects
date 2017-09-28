@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1448390494413
-Build-Jdk: 1.8.0_40
-Built-By: Marcelo
+Bnd-LastModified: 1506634817125
+Build-Jdk: 1.8.0_131
+Built-By: cin_moliveira
 Bundle-Description: The Apache Commons Math project is a library of ligh
  tweight, self-contained mathematics and statistics components addressin
  g the most common practical problems not immediately available in the J
@@ -75,11 +75,11 @@ Export-Package: org.apache.commons.math3;version="3.5",org.apache.common
  .apache.commons.math3.stat.regression;version="3.5",org.apache.commons.
  math3.transform;version="3.5",org.apache.commons.math3.util;version="3.
  5"
-Include-Resource: assets/org/apache/commons/math3/exception/util/Localiz
- edFormats_fr.properties=src/main/resources/assets/org/apache/commons/ma
- th3/exception/util/LocalizedFormats_fr.properties,assets/org/apache/com
- mons/math3/random/new-joe-kuo-6.1000=src/main/resources/assets/org/apac
- he/commons/math3/random/new-joe-kuo-6.1000,META-INF/LICENSE.txt=LICENSE
+Include-Resource: assets/org/apache/commons/math3/random/new-joe-kuo-6.1
+ 000=src/main/resources/assets/org/apache/commons/math3/random/new-joe-k
+ uo-6.1000,assets/org/apache/commons/math3/exception/util/LocalizedForma
+ ts_fr.properties=src/main/resources/assets/org/apache/commons/math3/exc
+ eption/util/LocalizedFormats_fr.properties,META-INF/LICENSE.txt=LICENSE
  .txt,META-INF/NOTICE.txt=NOTICE.txt
 Private-Package: assets.org.apache.commons.math3.exception.util,assets.o
  rg.apache.commons.math3.random

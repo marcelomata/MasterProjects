@@ -107,16 +107,85 @@ public class StatisticsComparation {
 	public static double SQ_Total(double[][] field1, double[][] means, boolean leftSide) {
 		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
 		
+//		printArray(field1, "intensities");
+//		System.out.println();
+//		printArray(means, "means");
+		System.out.println();
+		
+		double div = 0;
 		double sqtotal = 0;
 		for (int i = 0; i < field1.length; i++) {
 			for (int j = 0; j < field1[i].length; j++) {
 				if(map[i][j] == 'y') {
-					sqtotal = Math.pow(field1[i][j] - means[i][j], 2);
+					sqtotal += Math.pow(field1[i][j] - means[i][j], 2);
+					System.out.println("("+field1[i][j] +" - "+ means[i][j] + ") ^ 2 = " + sqtotal);
+//					System.out.println(sqtotal);
+					div++;
+					if(div == 1) 
+						break;
+
+				}
+				if(div == 1) 
+					break;
+			}
+		}
+		
+		return sqtotal / div;
+	}
+	
+	public static double pearson_correlation(double[][] field1, double[][] field2, double[][] means1, double[][] means2, boolean leftSide) {
+		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
+		
+//		printArray(field1, "intensities");
+//		System.out.println();
+//		printArray(means, "means");
+//		System.out.println();
+		
+		double humphrey = 0;
+		double humphreySqr = 0;
+		double protpotype = 0;
+		double protpotypeSqr = 0;
+		double mult = 0;
+		for (int i = 0; i < field1.length; i++) {
+			for (int j = 0; j < field1[i].length; j++) {
+				if(map[i][j] == 'y') {
+					protpotype = field1[i][j] - means1[i][j];
+					humphrey = field2[i][j] - means2[i][j];
+					mult += protpotype * humphrey;
+					protpotypeSqr = Math.pow(field1[i][j] - means1[i][j], 2);
+					humphreySqr = Math.pow(field2[i][j] - means2[i][j], 2);
 				}
 			}
 		}
 		
-		return sqtotal;
+		return mult / (Math.sqrt(protpotypeSqr)*Math.sqrt(humphreySqr));
+	}
+	
+	public static double deviation(double[][] field1, double[][] means, boolean leftSide) {
+		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
+		
+//		printArray(field1, "means1");
+//		System.out.println();
+//		printArray(means, "means2");
+//		System.out.println();
+		
+		double div = 0;
+		double sqtotal = 0;
+		for (int i = 0; i < field1.length; i++) {
+			for (int j = 0; j < field1[i].length; j++) {
+				if(map[i][j] == 'y') {
+//					System.out.println((field1[i][j] - means[i][j]));
+					sqtotal += (field1[i][j] - means[i][j]);
+					div++;
+					if(div == 1) 
+						break;
+				}
+			}
+			if(div == 1) 
+				break;
+		}
+		
+		return sqtotal / div;
 	}
 	
 	public static double EV(double[][] field1, double[][] field2, double[][] variances2, boolean leftSide) {

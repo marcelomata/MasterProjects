@@ -1,14 +1,22 @@
 
 package evaluation2;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.LayoutManager;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.ui.RefineryUtilities;
 
 import br.ufrgs.campimeter.examination.enums.EnumEye;
 import br.ufrgs.campimeter.examination.visualfield.file.ExaminationInformations;
@@ -49,20 +57,39 @@ public class MainOrganizing {
 		
 		double r_sqr_left = 0;
 		double r_sqr_right = 0;
-		List<double[]> sq_total_humphrey = null;
-		List<double[]> sq_total_prototype = null;
-		List<double[]> sq_total_res = null;
+		Map<String,double[]> sq_total_humphrey = null;
+		Map<String,double[]> sq_total_prototype = null;
+		Map<String,double[]> sq_total_res = null;
+		Map<String,double[]> pearson_correlation = null;
 		
 		try {
 			sq_total_humphrey = processHumphreyR(evaluationDir, meansHumphrey, reportsHumphreyByPatient, keysHumphrey);
-			sq_total_prototype = processPrototypeR(evaluationDir, means, reportsPrototypeByPatient, keysPrototype);
+//			sq_total_prototype = processPrototypeR(evaluationDir, means, reportsPrototypeByPatient, keysPrototype);
+			sq_total_prototype = processPrototypeR(evaluationDir, meansHumphrey, reportsPrototypeByPatient, keysPrototype);
 			sq_total_res = processSumRes(evaluationDir,reportsPrototypeByPatient, reportsHumphreyByPatient, keysPrototype, keysHumphrey);
-			for (int i = 0; i <  sq_total_humphrey.size() && i < sq_total_prototype.size() && i < sq_total_res.size(); i++) {
-//				r_sqr_left = Math.sqrt(1 - (sq_total_res.get(i)[0] / sq_total_prototype.get(i)[0]));
-//				r_sqr_right = Math.sqrt(1 - (sq_total_res.get(i)[1] / sq_total_prototype.get(i)[1]));
-				r_sqr_left = Math.sqrt(1 - (sq_total_humphrey.get(i)[0] / sq_total_prototype.get(i)[0]));
-				r_sqr_right = Math.sqrt(1 - (sq_total_humphrey.get(i)[1] / sq_total_prototype.get(i)[1]));
-				System.out.println(r_sqr_left+","+r_sqr_right);
+			pearson_correlation = pearsonCorrelation(evaluationDir,reportsPrototypeByPatient, reportsHumphreyByPatient, means, meansHumphrey, keysPrototype, keysHumphrey);
+			Set<String> pearson_keys = pearson_correlation.keySet();
+			for (String string : pearson_keys) {
+				System.out.println("ho left = " + pearson_correlation.get(string)[0]);
+				System.out.println("ho right = " + pearson_correlation.get(string)[1]);
+			}
+//			System.out.println(StatisticsComparation.deviation(means, meansHumphrey, true));
+			for(String key : keysPrototype) {
+				if(sq_total_res.containsKey(key) && sq_total_prototype.containsKey(key) && sq_total_humphrey.containsKey(getHumphreyKeyByPrototypeKey(key, keysHumphrey))) {
+					System.out.println();
+					System.out.println(key);
+					System.out.println("Res left "+sq_total_res.get(key)[0]);
+					System.out.println("Prot left "+sq_total_prototype.get(key)[0]);
+					System.out.println("Humphrey left "+sq_total_humphrey.get(getHumphreyKeyByPrototypeKey(key, keysHumphrey))[0]);
+					System.out.println("Res Right "+sq_total_res.get(key)[1]);
+					System.out.println("Prot Right "+sq_total_prototype.get(key)[1]);
+					System.out.println("Humphrey Right "+sq_total_humphrey.get(getHumphreyKeyByPrototypeKey(key, keysHumphrey))[1]);
+					r_sqr_left = Math.sqrt(1 - (sq_total_res.get(key)[0] / sq_total_prototype.get(key)[0]));
+					r_sqr_right = Math.sqrt(1 - (sq_total_res.get(key)[1] / sq_total_prototype.get(key)[1]));
+	//				r_sqr_left = Math.sqrt(sq_total_humphrey.get(i)[0] / sq_total_prototype.get(i)[0]);
+	//				r_sqr_right = Math.sqrt(sq_total_humphrey.get(i)[1] / sq_total_prototype.get(i)[1]);
+					System.out.println(r_sqr_left+","+r_sqr_right);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1020,19 +1047,23 @@ public class MainOrganizing {
 	}
 	
 	//TODO
-	private static List<double[]> processHumphreyR(File evaluationDir,
+	private static Map<String, double[]> processHumphreyR(File evaluationDir,
 			double[][] means,
 			Map<String, List<ReportData>> reportsHumphreyByPatient,
 			Set<String> keysHumphrey) throws IOException {
 		List<ReportData> leftReportHumphreyData;
 		List<ReportData> rightReportHumphreyData;
-		List<double[]> result = new ArrayList<double[]>();
+		Map<String,double[]> result = new HashMap<String, double[]>();
 		FileWriter fw;
 		String evaluationName;
 		double sqtotal_humphrey_test1;
 		double sqtotal_humphrey_test2;
 		File evaluationFile;
 		for (String patient : keysHumphrey) {
+			
+			if(!patient.toLowerCase().contains("luiza"))
+				continue;
+			
 			evaluationName = evaluationDir.getAbsolutePath()+"/"+patient+"_Humphrey.txt";
 			evaluationFile = new File(evaluationName);
 			if(!evaluationFile.exists()) {
@@ -1042,11 +1073,11 @@ public class MainOrganizing {
 			double []sqtotal_humphrey = {0, 0};
 			leftReportHumphreyData = getReportHumphreyData(reportsHumphreyByPatient.get(patient), 'E');
 			fw = new FileWriter(evaluationFile);
-			System.out.print(patient+",");
+			System.out.print(patient+",\n");
 			if(leftReportHumphreyData.size() > 1) {
 				sqtotal_humphrey_test1 = StatisticsComparation.SQ_Total(leftReportHumphreyData.get(0).getNumericIntensities(), means, true);
 				sqtotal_humphrey_test2 = StatisticsComparation.SQ_Total(leftReportHumphreyData.get(1).getNumericIntensities(), means, true);
-				sqtotal_humphrey[0] = sqtotal_humphrey_test1 + sqtotal_humphrey_test2;
+				sqtotal_humphrey[0] = (sqtotal_humphrey_test1 + sqtotal_humphrey_test2) / 2;
 				fw.write("SQ_total Humphrey Left = "+sqtotal_humphrey+"\n");
 				System.out.print(sqtotal_humphrey[0]+",");
 			}
@@ -1055,26 +1086,27 @@ public class MainOrganizing {
 			if(rightReportHumphreyData.size() > 1) {
 				sqtotal_humphrey_test1 = StatisticsComparation.SQ_Total(rightReportHumphreyData.get(0).getNumericIntensities(), means, false);
 				sqtotal_humphrey_test2 = StatisticsComparation.SQ_Total(rightReportHumphreyData.get(1).getNumericIntensities(), means, false);
-				sqtotal_humphrey[1] = sqtotal_humphrey_test1 + sqtotal_humphrey_test2;
+				sqtotal_humphrey[1] = (sqtotal_humphrey_test1 + sqtotal_humphrey_test2) / 2;
 				fw.write("SQ_total Humphrey Right = "+sqtotal_humphrey+"\n");
 				System.out.print(sqtotal_humphrey[1]+",\n");
 			}
 			fw.flush();
 			fw.close();
-			result.add(sqtotal_humphrey);
+			result.put(patient, sqtotal_humphrey);
+			return result;
 		}
 		return result;
 	}
 
 	//TODO
-	private static List<double[]> processPrototypeR(
+	private static Map<String, double[]> processPrototypeR(
 			File evaluationDir,
 			double[][] means,
 			Map<String, List<LoaderVisualField>> reportsPrototypeByPatient,
 			Set<String> keysPrototype) throws IOException {
 		List<LoaderVisualField> leftReportPrototypeData;
 		List<LoaderVisualField> rightReportPrototypeData;
-		List<double[]> result = new ArrayList<double[]>();
+		Map<String,double[]> result = new HashMap<String, double[]>();
 		FileWriter fw;
 		String evaluationName;
 		double sqtotal_prototype_test1;
@@ -1090,12 +1122,12 @@ public class MainOrganizing {
 			fw = new FileWriter(evaluationFile);
 			
 			double sqtotal_prototype[] = new double[] {0, 0};
-			System.out.print(patient+",");
+			System.out.print(patient+",\n");
 			leftReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.LEFT);
 			if(leftReportPrototypeData.size() > 1) {
 				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(leftReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), means, true);
 				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(leftReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), means, true);
-				sqtotal_prototype[0] = sqtotal_prototype_test1 + sqtotal_prototype_test2;
+				sqtotal_prototype[0] = (sqtotal_prototype_test1 + sqtotal_prototype_test2) / 2;
 				fw.write("SQ_total Prototype Left = "+sqtotal_prototype+"");
 				System.out.print(sqtotal_prototype[0]+",");
 			}
@@ -1104,25 +1136,26 @@ public class MainOrganizing {
 			if(rightReportPrototypeData.size() > 1) {
 				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), means, true);
 				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), means, true);
-				sqtotal_prototype[1] = sqtotal_prototype_test1 + sqtotal_prototype_test2;
+				sqtotal_prototype[1] = (sqtotal_prototype_test1 + sqtotal_prototype_test2) / 2;
 				fw.write("SQ_total Prototype Right = "+sqtotal_prototype+"\n");
 				System.out.print(sqtotal_prototype[1]+",\n");
 			} else {
 				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight1, means, false);
 				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight2, means, false);
-				sqtotal_prototype[1] += sqtotal_prototype_test1 + sqtotal_prototype_test2;
+				sqtotal_prototype[1] += (sqtotal_prototype_test1 + sqtotal_prototype_test2) / 2;
 				fw.write("SQ_total Prototype Right = "+sqtotal_prototype+"\n");
 				System.out.print(sqtotal_prototype[1]+",\n");
 			}
 			fw.flush();
 			fw.close();
-			result.add(sqtotal_prototype);
+			result.put(patient, sqtotal_prototype);
+			return result;
 		}
 		return result;
 	}
 	
 	//TODO
-	private static List<double[]> processSumRes(
+	private static Map<String, double[]> processSumRes(
 			File evaluationDir,
 			Map<String, List<LoaderVisualField>> reportsPrototypeByPatient,
 			Map<String, List<ReportData>> reportsHumphreyByPatient,
@@ -1132,7 +1165,7 @@ public class MainOrganizing {
 		List<LoaderVisualField> rightReportPrototypeData;
 		List<ReportData> leftReportHumphreyData;
 		List<ReportData> rightReportHumphreyData;
-		List<double[]> result = new ArrayList<double[]>();
+		Map<String,double[]> result = new HashMap<String, double[]>();
 		FileWriter fw;
 		String evaluationName;
 		double sqtotal_prototype_test1 = 0;
@@ -1156,10 +1189,10 @@ public class MainOrganizing {
 			leftReportHumphreyData = getReportHumphreyData(reportsHumphreyByPatient.get(respectiveHumphewyKey), 'E');
 			leftReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.LEFT);
 			if(leftReportPrototypeData.size() > 1 && leftReportHumphreyData.size() > 1 && !patient.equalsIgnoreCase("Dennis")) {
-				System.out.print(patient+",");
+				System.out.print(patient+",\n");
 				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(leftReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), leftReportHumphreyData.get(0).getNumericIntensities(), true);
 				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(leftReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), leftReportHumphreyData.get(1).getNumericIntensities(), true);
-				sqtotal_prototype[0] = sqtotal_prototype_test1 + sqtotal_prototype_test2;
+				sqtotal_prototype[0] = (sqtotal_prototype_test1 + sqtotal_prototype_test2) / 2;
 				fw.write("SQ_res Left = "+sqtotal_prototype[0]);
 				System.out.print(sqtotal_prototype[0]+",");
 			}
@@ -1168,20 +1201,90 @@ public class MainOrganizing {
 			rightReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.RIGHT);
 			if(rightReportPrototypeData.size() > 1 && rightReportHumphreyData.size() > 1 && !patient.equalsIgnoreCase("Dennis")) {
 				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), rightReportHumphreyData.get(0).getNumericIntensities(), false);
+				plot(rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), rightReportHumphreyData.get(0).getNumericIntensities(), false);
 				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), rightReportHumphreyData.get(1).getNumericIntensities(), false);
-				sqtotal_prototype[1] = sqtotal_prototype_test1 + sqtotal_prototype_test2;
+				sqtotal_prototype[1] = (sqtotal_prototype_test1 + sqtotal_prototype_test2) / 2;
 				fw.write("SQ_res Right = "+sqtotal_prototype+"\n");
 				System.out.print(sqtotal_prototype[1]+",\n");
 			} else if(!patient.equalsIgnoreCase("Dennis")) {
 				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), false);
 				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), false);
-				sqtotal_prototype[1] += sqtotal_prototype_test1 + sqtotal_prototype_test2;
+				sqtotal_prototype[1] += (sqtotal_prototype_test1 + sqtotal_prototype_test2) / 2;
 				fw.write("SQ_res Right = "+sqtotal_prototype+"\n");
 				System.out.print(sqtotal_prototype[1]+",\n");
 			}
 			fw.flush();
 			fw.close();
-			result.add(sqtotal_prototype);
+			result.put(patient, sqtotal_prototype);
+			return result;
+		}
+		return result;
+	}
+	
+	//TODO
+	private static Map<String, double[]> pearsonCorrelation(
+			File evaluationDir,
+			Map<String, List<LoaderVisualField>> reportsPrototypeByPatient,
+			Map<String, List<ReportData>> reportsHumphreyByPatient,
+			double[][] means1,
+			double[][] means2,
+			Set<String> keysPrototype,
+			Set<String> keysHumphrey) throws IOException {
+		List<LoaderVisualField> leftReportPrototypeData;
+		List<LoaderVisualField> rightReportPrototypeData;
+		List<ReportData> leftReportHumphreyData;
+		List<ReportData> rightReportHumphreyData;
+		Map<String,double[]> result = new HashMap<String, double[]>();
+		FileWriter fw;
+		String evaluationName;
+		double pearson_correlation_test1 = 0;
+		double pearson_correlation_test2 = 0;
+		File evaluationFile;
+		String respectiveHumphewyKey = "";
+		for (String patient : keysPrototype) {
+			respectiveHumphewyKey = getHumphreyKeyByPrototypeKey(patient, keysHumphrey);
+			if(respectiveHumphewyKey.isEmpty()) {
+				continue;
+			}
+			evaluationName = evaluationDir.getAbsolutePath()+"/"+patient+"_Prototype.txt";
+			evaluationFile = new File(evaluationName);
+			if(!evaluationFile.exists()) {
+				evaluationFile.createNewFile();
+			}
+			
+			fw = new FileWriter(evaluationFile);
+			
+			double pearson_correlation[] = new double[] {0, 0};
+			leftReportHumphreyData = getReportHumphreyData(reportsHumphreyByPatient.get(respectiveHumphewyKey), 'E');
+			leftReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.LEFT);
+			if(leftReportPrototypeData.size() > 1 && leftReportHumphreyData.size() > 1 && !patient.equalsIgnoreCase("Dennis")) {
+				System.out.print(patient+",\n");
+				pearson_correlation_test1 = StatisticsComparation.pearson_correlation(leftReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), leftReportHumphreyData.get(0).getNumericIntensities(), means1, means2, true);
+				pearson_correlation_test2 = StatisticsComparation.pearson_correlation(leftReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), leftReportHumphreyData.get(1).getNumericIntensities(), means1, means2, true);
+				pearson_correlation[0] = (pearson_correlation_test1 + pearson_correlation_test2);
+				fw.write("pearson correlation Left = "+pearson_correlation[0]);
+				System.out.print(pearson_correlation[0]+",");
+			}
+			
+			rightReportHumphreyData = getReportHumphreyData(reportsHumphreyByPatient.get(respectiveHumphewyKey), 'D');
+			rightReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.RIGHT);
+			if(rightReportPrototypeData.size() > 1 && rightReportHumphreyData.size() > 1 && !patient.equalsIgnoreCase("Dennis")) {
+				pearson_correlation_test1 = StatisticsComparation.SQ_Total(rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), rightReportHumphreyData.get(0).getNumericIntensities(), false);
+				pearson_correlation_test2 = StatisticsComparation.SQ_Total(rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), rightReportHumphreyData.get(1).getNumericIntensities(), false);
+				pearson_correlation[1] = (pearson_correlation_test1 + pearson_correlation_test2);
+				fw.write("pearson correlation Right = "+pearson_correlation+"\n");
+				System.out.print(pearson_correlation[1]+",\n");
+			} else if(!patient.equalsIgnoreCase("Dennis")) {
+				pearson_correlation_test1 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), false);
+				pearson_correlation_test2 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), false);
+				pearson_correlation[1] += (pearson_correlation_test1 + pearson_correlation_test2);
+				fw.write("pearson correlation Right = "+pearson_correlation+"\n");
+				System.out.print(pearson_correlation[1]+",\n");
+			}
+			fw.flush();
+			fw.close();
+			result.put(patient, pearson_correlation);
+			return result;
 		}
 		return result;
 	}
@@ -1205,6 +1308,36 @@ public class MainOrganizing {
 			
 		}
 		return "";
+	}
+	
+	private static void plot(double field1[][], double field2[][], boolean left) {
+		char[][] map = left ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
+//		XyGui plot;
+		ScatterPlotDemo1 plot;
+		Double [][]xDataTotal1 = new Double[2][50];
+		Double [][]yDataTotal1 = new Double[2][50];
+		int count = 0; 
+		for (int i = 0; i < field1.length; i++) {
+			for (int j = 0; j < field1[i].length; j++) {
+				if(map[i][j] == 'y') {
+					xDataTotal1[0][count] = (double) count+1;
+					yDataTotal1[0][count] = field1[i][j];
+					xDataTotal1[1][count] = (double) count+1;
+					yDataTotal1[1][count] = field2[i][j];
+					count++;
+				}
+			}
+		}
+		
+//		plot = new XyGui("Test samples ", xDataTotal1, yDataTotal1, true);
+		SampleXYDataset2 s = new SampleXYDataset2(2, 50, xDataTotal1, yDataTotal1);
+//		s.setxValues(new Double[][] {xDataTotal1, new Double[]{1.0}});
+//		s.setyValues(new Double[][] {yDataTotal1, new Double[]{1.0}});
+		plot = new ScatterPlotDemo1("Test samples ", s);
+		plot.pack();
+        RefineryUtilities.centerFrameOnScreen(plot);
+        plot.setVisible(true);
+//		plot.plot();
 	}
 
 }

@@ -1,1 +1,1 @@
-SQ_res Left = 1.426035500118343SQ_res Right = [D@28a418fc
+SQ_res Left = 18.335808306512128SQ_res Right = [D@4517d9a3
