@@ -1,2 +1,1 @@
-MSE Prototype Left = 5.238410706001914
-MSE Prototype Right = 5.238410706001914
+SQ_total Prototype Left = [D@5ca881b5SQ_total Prototype Right = [D@5ca881b5

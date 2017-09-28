@@ -1,0 +1,1 @@
+SQ_res Left = 7.999999983999999SQ_res Right = [D@27716f4

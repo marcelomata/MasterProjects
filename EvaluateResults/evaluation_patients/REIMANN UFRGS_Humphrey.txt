@@ -1,2 +1,2 @@
-MSE Humphrey Left = 5.043808085167397
-MSE Humphrey Right = -5.10098029794274
+SQ_total Humphrey Left = [D@1d44bcfa
+SQ_total Humphrey Right = [D@1d44bcfa

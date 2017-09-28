@@ -1,0 +1,1 @@
+SQ_res Left = 43.082840212544376SQ_res Right = [D@279f2327

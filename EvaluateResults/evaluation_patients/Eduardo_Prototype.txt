@@ -1,2 +1,1 @@
-MSE Prototype Left = -3.5357202815802204
-MSE Prototype Right = -3.5357202815802204
+SQ_res Left = 16.266272215266273SQ_res Right = [D@2f92e0f4

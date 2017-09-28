@@ -49,14 +49,21 @@ public class MainOrganizing {
 		
 		double r_sqr_left = 0;
 		double r_sqr_right = 0;
-		double sq_total_humphrey[];
-		double sq_total_prototype[];
-		double sq_total_res[] = new double[] {0, 0};
+		List<double[]> sq_total_humphrey = null;
+		List<double[]> sq_total_prototype = null;
+		List<double[]> sq_total_res = null;
 		
 		try {
 			sq_total_humphrey = processHumphreyR(evaluationDir, meansHumphrey, reportsHumphreyByPatient, keysHumphrey);
 			sq_total_prototype = processPrototypeR(evaluationDir, means, reportsPrototypeByPatient, keysPrototype);
 			sq_total_res = processSumRes(evaluationDir,reportsPrototypeByPatient, reportsHumphreyByPatient, keysPrototype, keysHumphrey);
+			for (int i = 0; i <  sq_total_humphrey.size() && i < sq_total_prototype.size() && i < sq_total_res.size(); i++) {
+//				r_sqr_left = Math.sqrt(1 - (sq_total_res.get(i)[0] / sq_total_prototype.get(i)[0]));
+//				r_sqr_right = Math.sqrt(1 - (sq_total_res.get(i)[1] / sq_total_prototype.get(i)[1]));
+				r_sqr_left = Math.sqrt(1 - (sq_total_humphrey.get(i)[0] / sq_total_prototype.get(i)[0]));
+				r_sqr_right = Math.sqrt(1 - (sq_total_humphrey.get(i)[1] / sq_total_prototype.get(i)[1]));
+				System.out.println(r_sqr_left+","+r_sqr_right);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -66,7 +73,7 @@ public class MainOrganizing {
 	public static void calcREMQ() {
 		File reportsHumphreyDir = new File("./reports_patients_humphrey_txt/");
 //		File reportsHumphreyDir = new File("./reports_patients_humphrey_txt_2/");
-		File reportsPrototypeDir = new File("./reports_patients_prototype_txt/");
+		File reportsPrototypeDir = new File("./reports_patients_prototype_txt_2/");
 		File evaluationDir = new File("./evaluation_patients/");
 		
 		List<ReportData> reportsHumphreyData = loadReportsHumphrey(reportsHumphreyDir);
@@ -1013,17 +1020,17 @@ public class MainOrganizing {
 	}
 	
 	//TODO
-	private static double[] processHumphreyR(File evaluationDir,
+	private static List<double[]> processHumphreyR(File evaluationDir,
 			double[][] means,
 			Map<String, List<ReportData>> reportsHumphreyByPatient,
 			Set<String> keysHumphrey) throws IOException {
 		List<ReportData> leftReportHumphreyData;
 		List<ReportData> rightReportHumphreyData;
+		List<double[]> result = new ArrayList<double[]>();
 		FileWriter fw;
 		String evaluationName;
 		double sqtotal_humphrey_test1;
 		double sqtotal_humphrey_test2;
-		double []sqtotal_humphrey = {0, 0};
 		File evaluationFile;
 		for (String patient : keysHumphrey) {
 			evaluationName = evaluationDir.getAbsolutePath()+"/"+patient+"_Humphrey.txt";
@@ -1032,47 +1039,46 @@ public class MainOrganizing {
 				evaluationFile.createNewFile();
 			}
 			
+			double []sqtotal_humphrey = {0, 0};
 			leftReportHumphreyData = getReportHumphreyData(reportsHumphreyByPatient.get(patient), 'E');
 			fw = new FileWriter(evaluationFile);
 			System.out.print(patient+",");
 			if(leftReportHumphreyData.size() > 1) {
-				System.out.print(patient+",");
 				sqtotal_humphrey_test1 = StatisticsComparation.SQ_Total(leftReportHumphreyData.get(0).getNumericIntensities(), means, true);
 				sqtotal_humphrey_test2 = StatisticsComparation.SQ_Total(leftReportHumphreyData.get(1).getNumericIntensities(), means, true);
 				sqtotal_humphrey[0] = sqtotal_humphrey_test1 + sqtotal_humphrey_test2;
 				fw.write("SQ_total Humphrey Left = "+sqtotal_humphrey+"\n");
-				System.out.print(sqtotal_humphrey+",");
+				System.out.print(sqtotal_humphrey[0]+",");
 			}
 			
 			rightReportHumphreyData = getReportHumphreyData(reportsHumphreyByPatient.get(patient), 'D');
 			if(rightReportHumphreyData.size() > 1) {
-				System.out.print(patient+",");
 				sqtotal_humphrey_test1 = StatisticsComparation.SQ_Total(rightReportHumphreyData.get(0).getNumericIntensities(), means, false);
 				sqtotal_humphrey_test2 = StatisticsComparation.SQ_Total(rightReportHumphreyData.get(1).getNumericIntensities(), means, false);
 				sqtotal_humphrey[1] = sqtotal_humphrey_test1 + sqtotal_humphrey_test2;
 				fw.write("SQ_total Humphrey Right = "+sqtotal_humphrey+"\n");
-				System.out.print(sqtotal_humphrey+",");
+				System.out.print(sqtotal_humphrey[1]+",\n");
 			}
 			fw.flush();
 			fw.close();
-			return sqtotal_humphrey;
+			result.add(sqtotal_humphrey);
 		}
-		return new double[] {0, 0};
+		return result;
 	}
 
 	//TODO
-	private static double[] processPrototypeR(
+	private static List<double[]> processPrototypeR(
 			File evaluationDir,
 			double[][] means,
 			Map<String, List<LoaderVisualField>> reportsPrototypeByPatient,
 			Set<String> keysPrototype) throws IOException {
 		List<LoaderVisualField> leftReportPrototypeData;
 		List<LoaderVisualField> rightReportPrototypeData;
+		List<double[]> result = new ArrayList<double[]>();
 		FileWriter fw;
 		String evaluationName;
 		double sqtotal_prototype_test1;
 		double sqtotal_prototype_test2;
-		double sqtotal_prototype[] = new double[] {0, 0};
 		File evaluationFile;
 		for (String patient : keysPrototype) {
 			evaluationName = evaluationDir.getAbsolutePath()+"/"+patient+"_Prototype.txt";
@@ -1083,94 +1089,122 @@ public class MainOrganizing {
 			
 			fw = new FileWriter(evaluationFile);
 			
+			double sqtotal_prototype[] = new double[] {0, 0};
+			System.out.print(patient+",");
 			leftReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.LEFT);
 			if(leftReportPrototypeData.size() > 1) {
-				System.out.print(patient+",");
 				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(leftReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), means, true);
 				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(leftReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), means, true);
 				sqtotal_prototype[0] = sqtotal_prototype_test1 + sqtotal_prototype_test2;
-				fw.write("SQ_total Prototype Left = "+sqtotal_prototype+"\n");
-				System.out.print(sqtotal_prototype+",");
+				fw.write("SQ_total Prototype Left = "+sqtotal_prototype+"");
+				System.out.print(sqtotal_prototype[0]+",");
 			}
 			
 			rightReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.RIGHT);
 			if(rightReportPrototypeData.size() > 1) {
-				System.out.print(patient+",");
 				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), means, true);
 				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), means, true);
 				sqtotal_prototype[1] = sqtotal_prototype_test1 + sqtotal_prototype_test2;
 				fw.write("SQ_total Prototype Right = "+sqtotal_prototype+"\n");
-				System.out.print(sqtotal_prototype+",");
+				System.out.print(sqtotal_prototype[1]+",\n");
 			} else {
-				System.out.print(patient+",");
 				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight1, means, false);
 				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight2, means, false);
 				sqtotal_prototype[1] += sqtotal_prototype_test1 + sqtotal_prototype_test2;
 				fw.write("SQ_total Prototype Right = "+sqtotal_prototype+"\n");
-				System.out.print(sqtotal_prototype+",");
+				System.out.print(sqtotal_prototype[1]+",\n");
 			}
 			fw.flush();
 			fw.close();
-			return sqtotal_prototype;
+			result.add(sqtotal_prototype);
 		}
-		return new double[] {0, 0};
+		return result;
 	}
 	
 	//TODO
-		private static double[] processSumRes(
-				File evaluationDir,
-				Map<String, List<LoaderVisualField>> reportsPrototypeByPatient,
-				Map<String, List<ReportData>> reportsHumphreyByPatient,
-				Set<String> keysPrototype,
-				Set<String> keysHumphrey) throws IOException {
-			List<LoaderVisualField> leftReportPrototypeData;
-			List<LoaderVisualField> rightReportPrototypeData;
-			FileWriter fw;
-			String evaluationName;
-			double sqtotal_prototype_test1;
-			double sqtotal_prototype_test2;
-			double sqtotal_prototype[] = new double[] {0, 0};
-			File evaluationFile;
-			for (String patient : keysPrototype) {
-				evaluationName = evaluationDir.getAbsolutePath()+"/"+patient+"_Prototype.txt";
-				evaluationFile = new File(evaluationName);
-				if(!evaluationFile.exists()) {
-					evaluationFile.createNewFile();
-				}
-				
-				fw = new FileWriter(evaluationFile);
-				
-				leftReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.LEFT);
-				if(leftReportPrototypeData.size() > 1) {
-					System.out.print(patient+",");
-					sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(leftReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), , true);
-					sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(leftReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), means, true);
-					sqtotal_prototype[0] = sqtotal_prototype_test1 + sqtotal_prototype_test2;
-					fw.write("SQ_total Prototype Left = "+sqtotal_prototype+"\n");
-					System.out.print(sqtotal_prototype+",");
-				}
-				
-				rightReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.RIGHT);
-				if(rightReportPrototypeData.size() > 1) {
-					System.out.print(patient+",");
-					sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), means, true);
-					sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), means, true);
-					sqtotal_prototype[1] = sqtotal_prototype_test1 + sqtotal_prototype_test2;
-					fw.write("SQ_total Prototype Right = "+sqtotal_prototype+"\n");
-					System.out.print(sqtotal_prototype+",");
-				} else {
-					System.out.print(patient+",");
-					sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight1, means, false);
-					sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight2, means, false);
-					sqtotal_prototype[1] += sqtotal_prototype_test1 + sqtotal_prototype_test2;
-					fw.write("SQ_total Prototype Right = "+sqtotal_prototype+"\n");
-					System.out.print(sqtotal_prototype+",");
-				}
-				fw.flush();
-				fw.close();
-				return sqtotal_prototype;
+	private static List<double[]> processSumRes(
+			File evaluationDir,
+			Map<String, List<LoaderVisualField>> reportsPrototypeByPatient,
+			Map<String, List<ReportData>> reportsHumphreyByPatient,
+			Set<String> keysPrototype,
+			Set<String> keysHumphrey) throws IOException {
+		List<LoaderVisualField> leftReportPrototypeData;
+		List<LoaderVisualField> rightReportPrototypeData;
+		List<ReportData> leftReportHumphreyData;
+		List<ReportData> rightReportHumphreyData;
+		List<double[]> result = new ArrayList<double[]>();
+		FileWriter fw;
+		String evaluationName;
+		double sqtotal_prototype_test1 = 0;
+		double sqtotal_prototype_test2 = 0;
+		File evaluationFile;
+		String respectiveHumphewyKey = "";
+		for (String patient : keysPrototype) {
+			respectiveHumphewyKey = getHumphreyKeyByPrototypeKey(patient, keysHumphrey);
+			if(respectiveHumphewyKey.isEmpty()) {
+				continue;
 			}
-			return new double[] {0, 0};
+			evaluationName = evaluationDir.getAbsolutePath()+"/"+patient+"_Prototype.txt";
+			evaluationFile = new File(evaluationName);
+			if(!evaluationFile.exists()) {
+				evaluationFile.createNewFile();
+			}
+			
+			fw = new FileWriter(evaluationFile);
+			
+			double sqtotal_prototype[] = new double[] {0, 0};
+			leftReportHumphreyData = getReportHumphreyData(reportsHumphreyByPatient.get(respectiveHumphewyKey), 'E');
+			leftReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.LEFT);
+			if(leftReportPrototypeData.size() > 1 && leftReportHumphreyData.size() > 1 && !patient.equalsIgnoreCase("Dennis")) {
+				System.out.print(patient+",");
+				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(leftReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), leftReportHumphreyData.get(0).getNumericIntensities(), true);
+				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(leftReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), leftReportHumphreyData.get(1).getNumericIntensities(), true);
+				sqtotal_prototype[0] = sqtotal_prototype_test1 + sqtotal_prototype_test2;
+				fw.write("SQ_res Left = "+sqtotal_prototype[0]);
+				System.out.print(sqtotal_prototype[0]+",");
+			}
+			
+			rightReportHumphreyData = getReportHumphreyData(reportsHumphreyByPatient.get(respectiveHumphewyKey), 'D');
+			rightReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.RIGHT);
+			if(rightReportPrototypeData.size() > 1 && rightReportHumphreyData.size() > 1 && !patient.equalsIgnoreCase("Dennis")) {
+				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), rightReportHumphreyData.get(0).getNumericIntensities(), false);
+				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), rightReportHumphreyData.get(1).getNumericIntensities(), false);
+				sqtotal_prototype[1] = sqtotal_prototype_test1 + sqtotal_prototype_test2;
+				fw.write("SQ_res Right = "+sqtotal_prototype+"\n");
+				System.out.print(sqtotal_prototype[1]+",\n");
+			} else if(!patient.equalsIgnoreCase("Dennis")) {
+				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), false);
+				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), false);
+				sqtotal_prototype[1] += sqtotal_prototype_test1 + sqtotal_prototype_test2;
+				fw.write("SQ_res Right = "+sqtotal_prototype+"\n");
+				System.out.print(sqtotal_prototype[1]+",\n");
+			}
+			fw.flush();
+			fw.close();
+			result.add(sqtotal_prototype);
 		}
+		return result;
+	}
+	
+	private static String getHumphreyKeyByPrototypeKey(String key, Set<String> keysHumphrey) {
+		String namesP[] = key.split(" ");
+		String namesH[] = null;
+		for (String string : keysHumphrey) {
+			namesH = string.split(" ");
+			if(namesH[0].toLowerCase().contains(key.split(" ")[0].toLowerCase())) {
+				if(namesH.length > 1 && namesP.length > 1) {
+					if(namesH[1].toLowerCase().equalsIgnoreCase("ufrgs") || namesH[1].toLowerCase().charAt(0) == namesP[1].toLowerCase().charAt(0)) {
+//						System.out.println("\n" + string + " contains " + key);
+						return string;
+					}
+				} else {
+//					System.out.println("\n" + string + " contains " + key);
+					return string;
+				}
+			}
+			
+		}
+		return "";
+	}
 
 }
