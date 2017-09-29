@@ -33,8 +33,8 @@ public class ScatterPlotDemo1 extends ApplicationFrame {
     }
 
     public static JFreeChart createChart(XYDataset dataset) {
-        JFreeChart chart = ChartFactory.createScatterPlot("Scatter Plot Demo 1",
-                "X", "Y", dataset, PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart chart = ChartFactory.createScatterPlot("Estimativas e médias do Humphrey e do protótipo",
+                "Pontos do campo visual", "Intensidade (dB)", dataset, PlotOrientation.VERTICAL, true, true, false);
 
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setNoDataMessage("NO DATA");

@@ -1,4 +1,6 @@
 package evaluation2;
+import java.util.List;
+
 import org.jfree.data.DomainInfo;
 import org.jfree.data.Range;
 import org.jfree.data.RangeInfo;
@@ -62,14 +64,16 @@ public class SampleXYDataset2 extends AbstractXYDataset
 //        this(DEFAULT_SERIES_COUNT, DEFAULT_ITEM_COUNT);
 //    }
 
+    private String []seriesNames;
     /**
      * Creates a sample dataset.
      *
      * @param seriesCount  the number of series.
      * @param itemCount  the number of items.
      */
-    public SampleXYDataset2(int seriesCount, int itemCount, Double[][] xvalues, Double[][] yvalues) {
+    public SampleXYDataset2(int seriesCount, int itemCount, Double[][] xvalues, Double[][] yvalues, String []seriesNames) {
 
+    	this.seriesNames = seriesNames;
         this.xValues = new Double[seriesCount][itemCount];
         this.yValues = new Double[seriesCount][itemCount];
         this.seriesCount = seriesCount;
@@ -162,7 +166,8 @@ public class SampleXYDataset2 extends AbstractXYDataset
      * @return The key for the series.
      */
     public Comparable getSeriesKey(int series) {
-        return "Sample " + series;
+//        return "Sample " + series;
+        return seriesNames[series];
     }
 
     /**
