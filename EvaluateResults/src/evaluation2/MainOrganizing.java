@@ -68,7 +68,7 @@ public class MainOrganizing {
 			sq_total_prototype = processPrototypeR(evaluationDir, meansHumphrey, reportsPrototypeByPatient, keysPrototype);
 			sq_total_res = processSumRes(evaluationDir,reportsPrototypeByPatient, reportsHumphreyByPatient, keysPrototype, keysHumphrey);
 			pearson_correlation = pearsonCorrelation(evaluationDir,reportsPrototypeByPatient, reportsHumphreyByPatient, means, meansHumphrey, keysPrototype, keysHumphrey);
-			plotAll(evaluationDir,reportsPrototypeByPatient, reportsHumphreyByPatient, means, meansHumphrey, keysPrototype, keysHumphrey);
+//			plotAll(evaluationDir,reportsPrototypeByPatient, reportsHumphreyByPatient, means, meansHumphrey, keysPrototype, keysHumphrey);
 			Set<String> pearson_keys = pearson_correlation.keySet();
 			for (String string : pearson_keys) {
 				System.out.println("ho left = " + pearson_correlation.get(string)[0]);
