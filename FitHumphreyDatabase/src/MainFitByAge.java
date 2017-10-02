@@ -37,6 +37,11 @@ public class MainFitByAge {
 		
 	}
 
+	private static Map<Integer, List<ReportData>> reconstructByIntensity(List<ReportData> reportsData) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private static void fitCourves(List<ReportData> reportData,	Integer age, String eyeSide) {
 		File parametersFile = new File("./fit_parameters/"+age+"-"+eyeSide+".txt");
 		if(!parametersFile.exists()) {
