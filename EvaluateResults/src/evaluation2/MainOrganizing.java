@@ -1312,49 +1312,49 @@ public class MainOrganizing {
 	}
 	
 	//TODO
-		private static void plotAll(
-				File evaluationDir,
-				Map<String, List<LoaderVisualField>> reportsPrototypeByPatient,
-				Map<String, List<ReportData>> reportsHumphreyByPatient,
-				double [][] means1,
-				double [][] means2,
-				Set<String> keysPrototype,
-				Set<String> keysHumphrey) throws IOException {
-			List<LoaderVisualField> leftReportPrototypeData;
-			List<LoaderVisualField> rightReportPrototypeData;
-			List<ReportData> leftReportHumphreyData;
-			List<ReportData> rightReportHumphreyData;
-			Map<String,double[]> result = new HashMap<String, double[]>();
-			
-			String respectiveHumphewyKey = "";
-			for (String patient : keysPrototype) {
-				if(patient.toLowerCase().contains("vinicius b")) {
-					respectiveHumphewyKey = getHumphreyKeyByPrototypeKey(patient, keysHumphrey);
-					if(respectiveHumphewyKey.isEmpty()) {
-						continue;
-					}
-					
-					leftReportHumphreyData = getReportHumphreyData(reportsHumphreyByPatient.get(respectiveHumphewyKey), 'E');
-					leftReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.LEFT);
-					if(leftReportPrototypeData.size() > 1 && leftReportHumphreyData.size() > 1 && !patient.equalsIgnoreCase("Dennis")) {
-						System.out.print(patient+",\n");
-						plot(leftReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), leftReportHumphreyData.get(0).getNumericIntensities(), means1, means2, true, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
-						plot(leftReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), leftReportHumphreyData.get(1).getNumericIntensities(), means1, means2, true, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
-					}
-					
-					rightReportHumphreyData = getReportHumphreyData(reportsHumphreyByPatient.get(respectiveHumphewyKey), 'D');
-					rightReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.RIGHT);
-					if(rightReportPrototypeData.size() > 1 && rightReportHumphreyData.size() > 1 && !patient.equalsIgnoreCase("Dennis")) {
-						plot(rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), rightReportHumphreyData.get(0).getNumericIntensities(), means1, means2, false, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
-						plot(rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), rightReportHumphreyData.get(1).getNumericIntensities(), means1, means2, false, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
-					} else if(!patient.equalsIgnoreCase("Dennis")) {
-						plot(LoadMathias.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), means1, means2, false, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
-						plot(LoadMathias.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), means1, means2, false, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
-					}
-					return;
+	private static void plotAll(
+			File evaluationDir,
+			Map<String, List<LoaderVisualField>> reportsPrototypeByPatient,
+			Map<String, List<ReportData>> reportsHumphreyByPatient,
+			double [][] means1,
+			double [][] means2,
+			Set<String> keysPrototype,
+			Set<String> keysHumphrey) throws IOException {
+		List<LoaderVisualField> leftReportPrototypeData;
+		List<LoaderVisualField> rightReportPrototypeData;
+		List<ReportData> leftReportHumphreyData;
+		List<ReportData> rightReportHumphreyData;
+		Map<String,double[]> result = new HashMap<String, double[]>();
+		
+		String respectiveHumphewyKey = "";
+		for (String patient : keysPrototype) {
+			if(patient.toLowerCase().contains("vinicius b")) {
+				respectiveHumphewyKey = getHumphreyKeyByPrototypeKey(patient, keysHumphrey);
+				if(respectiveHumphewyKey.isEmpty()) {
+					continue;
 				}
+				
+				leftReportHumphreyData = getReportHumphreyData(reportsHumphreyByPatient.get(respectiveHumphewyKey), 'E');
+				leftReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.LEFT);
+				if(leftReportPrototypeData.size() > 1 && leftReportHumphreyData.size() > 1 && !patient.equalsIgnoreCase("Dennis")) {
+					System.out.print(patient+",\n");
+					plot(leftReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), leftReportHumphreyData.get(0).getNumericIntensities(), means1, means2, true, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
+					plot(leftReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), leftReportHumphreyData.get(1).getNumericIntensities(), means1, means2, true, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
+				}
+				
+				rightReportHumphreyData = getReportHumphreyData(reportsHumphreyByPatient.get(respectiveHumphewyKey), 'D');
+				rightReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.RIGHT);
+				if(rightReportPrototypeData.size() > 1 && rightReportHumphreyData.size() > 1 && !patient.equalsIgnoreCase("Dennis")) {
+					plot(rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), rightReportHumphreyData.get(0).getNumericIntensities(), means1, means2, false, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
+					plot(rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), rightReportHumphreyData.get(1).getNumericIntensities(), means1, means2, false, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
+				} else if(!patient.equalsIgnoreCase("Dennis")) {
+					plot(LoadMathias.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), means1, means2, false, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
+					plot(LoadMathias.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), means1, means2, false, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
+				}
+				return;
 			}
 		}
+	}
 	
 	private static void plot(double field1[][], double field2[][], boolean left, String[] namesOfSeries) {
 		char[][] map = left ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
