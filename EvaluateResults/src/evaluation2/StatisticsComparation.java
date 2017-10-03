@@ -110,13 +110,13 @@ public class StatisticsComparation {
 //		printArray(field1, "intensities");
 //		System.out.println();
 //		printArray(means, "means");
-		System.out.println();
+//		System.out.println();
 		
 		double div = 0;
 		double sqtotal = 0;
 		for (int i = 0; i < field1.length; i++) {
 			for (int j = 0; j < field1[i].length; j++) {
-				if(map[i][j] == 'y') {
+				if(map[i][j] == 'y' && (field1[i][j] -  means[i][j]) < 5) {
 					sqtotal += Math.pow(field1[i][j] - means[i][j], 2);
 					System.out.println("("+field1[i][j] +" - "+ means[i][j] + ") ^ 2 = " + sqtotal);
 //					System.out.println(sqtotal);
