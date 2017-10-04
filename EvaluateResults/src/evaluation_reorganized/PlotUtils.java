@@ -13,7 +13,7 @@ import evaluation2.ReportData;
 import evaluation2.SampleXYDataset2;
 import evaluation2.ScatterPlotDemo1;
 
-public class PlotUtils extends ComparisonAtributes {
+public class PlotUtils extends ComparisonAttributes {
 	
 //	public static void main(String[] args) throws IOException {
 //		setUpAttributes();

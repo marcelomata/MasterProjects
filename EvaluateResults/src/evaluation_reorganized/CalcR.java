@@ -14,7 +14,7 @@ import evaluation2.LoadMathias;
 import evaluation2.ReportData;
 import evaluation2.StatisticsComparation;
 
-public class CalcR extends ComparisonAtributes {
+public class CalcR extends ComparisonAttributes {
 	
 	public static void main(String[] args) {
 		calcR();

@@ -9,7 +9,7 @@ import br.ufrgs.campimeter.examination.visualfield.file.LoaderVisualField;
 import evaluation2.ReportData;
 import evaluation2.StatisticsComparation;
 
-public class ComparisonAtributes {
+public class ComparisonAttributes {
 	
 	public static File reportsHumphreyDir;
 	public static File reportsPrototypeDir;

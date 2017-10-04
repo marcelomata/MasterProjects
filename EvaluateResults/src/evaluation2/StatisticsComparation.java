@@ -133,6 +133,36 @@ public class StatisticsComparation {
 		return sqtotal / div;
 	}
 	
+	public static double[][] calc_ratios_pointwise(double[][] field1, double[][] field2, boolean leftSide) {
+		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
+		
+		double ratio[][] = new double[field1.length][field1[0].length];
+		for (int i = 0; i < field1.length; i++) {
+			for (int j = 0; j < field1[i].length; j++) {
+				if(map[i][j] == 'y') {
+					ratio[i][j] = (int)((field2[i][j] / field1[i][j]) * 100);
+				}
+			}
+		}
+		
+		return ratio;
+	}
+	
+	public static double[][] calc_diff_pointwise(double[][] field1, double[][] field2, boolean leftSide) {
+		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
+		
+		double ratio[][] = new double[field1.length][field1[0].length];
+		for (int i = 0; i < field1.length; i++) {
+			for (int j = 0; j < field1[i].length; j++) {
+				if(map[i][j] == 'y') {
+					ratio[i][j] = (int) (field2[i][j] - field1[i][j]);
+				}
+			}
+		}
+		
+		return ratio;
+	}
+	
 	public static double pearson_correlation(double[][] field1, double[][] field2, double[][] means1, double[][] means2, boolean leftSide) {
 		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
 		
@@ -406,6 +436,5 @@ public class StatisticsComparation {
 		System.out.println();
 		System.out.println();
 	}
-	
 
 }
