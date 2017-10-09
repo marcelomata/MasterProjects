@@ -163,6 +163,41 @@ public class StatisticsComparation {
 		return ratio;
 	}
 	
+    /*
+     * 1 the field 1 is bigger than the field 2
+     * 0 the field 1 is equal than the field 2
+     * -1 the field 1 is smaller than the field 2
+     */
+	public static double[][] calc_order_pointwise(double[][] field1, double[][] field2, boolean leftSide) {
+		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
+		
+		double ratio[][] = new double[field1.length][field1[0].length];
+		for (int i = 0; i < field1.length; i++) {
+			for (int j = 0; j < field1[i].length; j++) {
+				if(map[i][j] == 'y') {
+					ratio[i][j] = field2[i][j] > field1[i][j] ? 1 : field2[i][j] < field1[i][j] ? -1 : 0;
+				}
+			}
+		}
+		
+		return ratio;
+	}
+	
+	public static int calc_number_field1_bigger(double[][] field1, double[][] field2, boolean leftSide) {
+		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
+		
+		int count = 0;
+		for (int i = 0; i < field1.length; i++) {
+			for (int j = 0; j < field1[i].length; j++) {
+				if(map[i][j] == 'y' && field2[i][j] > field1[i][j]) {
+					count += 1;
+				}
+			}
+		}
+		
+		return count;
+	}
+	
 	public static double pearson_correlation(double[][] field1, double[][] field2, double[][] means1, double[][] means2, boolean leftSide) {
 		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
 		
@@ -425,16 +460,4 @@ public class StatisticsComparation {
 		return normalized;
 	}
 	
-	private static void printArray(double[][] array, String string) {
-		System.out.println(string);
-		for (int i = 0; i < array.length; i++) {
-			for (int j = 0; j < array[i].length; j++) {
-				System.out.print(array[i][j]+",");
-			}
-			System.out.println();
-		}
-		System.out.println();
-		System.out.println();
-	}
-
 }
