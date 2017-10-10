@@ -10,26 +10,31 @@ import evaluation2.StatisticsComparation;
 
 public class CalcOrders extends ComparisonAttributes {
 	
-//	public static void main(String[] args) throws IOException {
-////		Map<String, double[][][]> diffs = processDiffs();
-//		Map<String, int[]> orders = processOrders();
-//		Set<String> keys = diffs.keySet();
-//		for (String string : keys) {
-//			if(diffs.get(string) != null) {
-//				System.out.println(string);
-//				for (int i = 0; i < diffs.get(string).length; i++) {
-//					PrintUtils.printFieldInt(diffs.get(string)[i]);
-//					System.out.println();
-//				}
-//			}
-//			PrintUtils.printSeparator();
-//		}
-//	}
+	public static void main(String[] args) throws IOException {
+		Map<String, double[][][]> ordersPointwise = processOrders();
+		Map<String, int[]> ordersCount = processOrdersCount();
+		Set<String> keys = ordersPointwise.keySet();
+		for (String string : keys) {
+			if(ordersPointwise.get(string) != null) {
+				System.out.println(string);
+				for (int i = 0; i < ordersPointwise.get(string).length; i++) {
+//					PrintUtils.printFieldInt(ordersPointwise.get(string)[i]);
+					System.out.println(ordersCount.get(string)[i]);
+				}
+			}
+			PrintUtils.printSeparator();
+		}
+	}
 
 	private static Map<String, double[][][]> processOrders() throws IOException {
+		Map<String,double[][][]> result = new HashMap<String, double[][][]>();
+		processOrdersByType(result, null);
+		return result;
+	}
+
+	private static void processOrdersByType(Map<String, double[][][]> resultPointWise, Map<String, int[]> resultCount) throws IOException {
 		setUpAttributes();
 		
-		Map<String,double[][][]> result = new HashMap<String, double[][][]>();
 		String evaluationName;
 		File evaluationFile;
 		String respectiveHumphewyKey = "";
@@ -52,10 +57,20 @@ public class CalcOrders extends ComparisonAttributes {
 			setUpFieldsDevicesResult();
 //			setUpFieldsPrototypeAndProtMeans();
 //			setUpFieldsPrototypeMeansHumphreyMeans();
-			result.put(patient, calculateOrders());
 			
-//			return result;
+			if(resultPointWise != null) {
+				resultPointWise.put(patient, calculateOrders());
+			}
+			
+			if(resultCount != null) {
+				resultCount.put(patient, countingOrders());
+			}
 		}
+	}
+	
+	private static Map<String, int[]> processOrdersCount() throws IOException {
+		Map<String,int[]> result = new HashMap<String, int[]>();
+		processOrdersByType(null, result);
 		return result;
 	}
 

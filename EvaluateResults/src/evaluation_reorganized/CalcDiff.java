@@ -50,7 +50,7 @@ public class CalcDiff extends ComparisonAttributes {
 			setUpDevicesFields(leftReportPrototypeData, rightReportPrototypeData, leftReportHumphreyData, rightReportHumphreyData, isDennis);
 			setUpFieldsDevicesResult();
 //			setUpFieldsPrototypeAndProtMeans();
-			setUpFieldsPrototypeMeansHumphreyMeans();
+//			setUpFieldsPrototypeMeansHumphreyMeans();
 			result.put(patient, calculateDiffs());
 			
 //			return result;
