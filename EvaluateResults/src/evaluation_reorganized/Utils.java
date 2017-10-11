@@ -41,4 +41,16 @@ public class Utils {
 		return "";
 	}
 
+	public static int getNumberValidPoints(char[][] map) {
+		int count = 0;
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+				if(map[i][j] == 'y') {
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+
 }

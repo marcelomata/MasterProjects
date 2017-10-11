@@ -31,6 +31,12 @@ public class CalcOrders extends ComparisonAttributes {
 		processOrdersByType(result, null);
 		return result;
 	}
+	
+	private static Map<String, int[]> processOrdersCount() throws IOException {
+		Map<String,int[]> result = new HashMap<String, int[]>();
+		processOrdersByType(null, result);
+		return result;
+	}
 
 	private static void processOrdersByType(Map<String, double[][][]> resultPointWise, Map<String, int[]> resultCount) throws IOException {
 		setUpAttributes();
@@ -68,12 +74,6 @@ public class CalcOrders extends ComparisonAttributes {
 		}
 	}
 	
-	private static Map<String, int[]> processOrdersCount() throws IOException {
-		Map<String,int[]> result = new HashMap<String, int[]>();
-		processOrdersByType(null, result);
-		return result;
-	}
-
 	private static double[][][] calculateOrders() {
 //		System.out.print(patient+",\n");
 		double ratios[][][] = null;

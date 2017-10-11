@@ -1,15 +1,5 @@
 package evaluation2;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import br.ufrgs.campimeter.examination.enums.EnumEye;
-import br.ufrgs.campimeter.examination.visualfield.Parameters;
-import br.ufrgs.campimeter.examination.visualfield.VisualField;
-import br.ufrgs.campimeter.examination.visualfield.file.ExaminationInformations;
-import br.ufrgs.campimeter.examination.visualfield.file.VisualFieldFileLoaderV1_0;
-
-
 public class LoadMathias {
 	
 	public static double[][] intensitiesMathiasRight1 =

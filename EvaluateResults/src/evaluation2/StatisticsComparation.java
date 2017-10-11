@@ -183,6 +183,21 @@ public class StatisticsComparation {
 		return ratio;
 	}
 	
+	public static double[][] calc_diff_square_by_point(double[][] field1, double[][] field2, boolean leftSide) {
+		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
+		
+		double diffSquare[][] = new double[field1.length][field1[0].length];
+		for (int i = 0; i < field1.length; i++) {
+			for (int j = 0; j < field1[i].length; j++) {
+				if(map[i][j] == 'y') {
+					diffSquare[i][j] = Math.pow(field2[i][j] - field1[i][j], 2);
+				}
+			}
+		}
+		
+		return diffSquare;
+	}
+	
 	public static int calc_number_field1_bigger(double[][] field1, double[][] field2, boolean leftSide) {
 		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
 		

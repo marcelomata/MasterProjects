@@ -1,27 +1,21 @@
 
 package evaluation2;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.LayoutManager;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.ui.RefineryUtilities;
 
 import br.ufrgs.campimeter.examination.enums.EnumEye;
 import br.ufrgs.campimeter.examination.visualfield.file.ExaminationInformations;
-import br.ufrgs.campimeter.examination.visualfield.file.VisualFieldFileLoaderMap;
 import br.ufrgs.campimeter.examination.visualfield.file.LoaderVisualField;
+import br.ufrgs.campimeter.examination.visualfield.file.VisualFieldFileLoaderMap;
 import br.ufrgs.campimeter.examination.visualfield.file.VisualFieldFileLoaderV1_0;
 
 

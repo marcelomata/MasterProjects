@@ -2,6 +2,8 @@ package evaluation_reorganized;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.jfree.ui.RefineryUtilities;
 
@@ -119,6 +121,52 @@ public class PlotUtils extends ComparisonAttributes {
         RefineryUtilities.centerFrameOnScreen(plot);
         plot.setVisible(true);
 //		plot.plot();
+	}
+
+	public static void plotByFieldIndex(Map<String, double[][][][]> squareDiffs, int index, boolean leftSide) {
+		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
+		int countIndex = 0;
+		int count = 0;
+		int countIntern = 0;
+		Set<String> keys = squareDiffs.keySet();
+		double[][][] field = null;
+		double[][][][] fieldsAll = null;
+//		int numberPoints = Utils.getNumberValidPoints(map);
+		int numberOfPointsToPlot = keys.size()*4;
+		Double [][]xDataTotal1 = new Double[2][numberOfPointsToPlot];
+		Double [][]yDataTotal1 = new Double[2][numberOfPointsToPlot];
+		for (String string : keys) {
+			if(squareDiffs.get(string) != null) {
+				fieldsAll = squareDiffs.get(string);
+				for(int k = 0; k < fieldsAll.length; k++) {
+					field = fieldsAll[k];
+					countIntern = 0;
+					for(int m = 0; m < field.length; m++) {
+						countIndex = 0;
+						for (int i = 0; i < field[m].length; i++) {
+							for (int j = 0; j < field[m][i].length; j++) {
+								if(map[i][j] == 'y') {
+									countIndex++;
+									if(countIndex == index) {
+										xDataTotal1[k][countIntern*count + countIntern] = field[m][i][j];
+										yDataTotal1[k][countIntern*count + countIntern] = (double)countIntern*count + countIntern;
+										countIntern++;
+									}
+								}
+							}
+						}
+					}
+					count++;
+				}
+			}
+		}
+		
+		SampleXYDataset2 s = new SampleXYDataset2(2, numberOfPointsToPlot, xDataTotal1, yDataTotal1, 
+				new String[]{"Prototype", "Humphrey"}) ;
+		ScatterPlotDemo1 plot = new ScatterPlotDemo1("Test samples - Covariance", s);
+		plot.pack();
+        RefineryUtilities.centerFrameOnScreen(plot);
+        plot.setVisible(true);
 	}
 	
 }

@@ -1,6 +1,4 @@
 package evaluation2;
-import java.util.List;
-
 import org.jfree.data.DomainInfo;
 import org.jfree.data.Range;
 import org.jfree.data.RangeInfo;
