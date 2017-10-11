@@ -14,15 +14,17 @@ public class CalcByIndex extends ComparisonAttributes {
 		Map<String, double[][][]> squareDiffsPrototype = new HashMap<String, double[][][]>();
 		Map<String, double[][][]> squareDiffsHumphrey = new HashMap<String, double[][][]>();
 		squareDiffsPrototype = processCov(2);
+		System.out.println("################");
 		squareDiffsHumphrey = processCov(3);
-	    Object[] allDiffsArray = new Object[] {squareDiffsPrototype, squareDiffsHumphrey};
+//	    Object[] allDiffsArray = new Object[] {squareDiffsPrototype, squareDiffsHumphrey};
+	    Object[] allDiffsArray = new Object[] {squareDiffsPrototype};
 		Map<String, double[][][][]> squareDiffsAll = getAllSquareDiffs(allDiffsArray);
 		PlotUtils.plotByFieldIndex(squareDiffsAll, 1, true);
 	}
 	
-	private static Map<String, double[][][]> processCov(int i) throws IOException {
+	private static Map<String, double[][][]> processCov(int typeFields) throws IOException {
 		Map<String,double[][][]> result = new HashMap<String, double[][][]>();
-		processCovByType(result, null, i);
+		processCovByType(result, null, typeFields);
 		return result;
 	}
 	
@@ -52,7 +54,7 @@ public class CalcByIndex extends ComparisonAttributes {
 //			setUpFieldsPrototypeAndProtMeans();
 			switch(typeFields) {
 				case 2 :
-					setUpFieldsPrototypeMeansHumphreyMeans();
+					setUpFieldsPrototypeAndHumphreyMeans();
 					break;
 				case 3 :
 					setUpFieldsHumphreyAndHumphreyMeans();
@@ -62,7 +64,13 @@ public class CalcByIndex extends ComparisonAttributes {
 			}
 			
 			if(resultPointWise != null) {
-				resultPointWise.put(patient, calculateDiffSquareByPoint());
+				if(typeCalc == 1) {
+					resultPointWise.put(patient, calculateDiffSquareByPoint());
+				} else if(typeCalc == 2) {
+					resultPointWise.put(patient, getFieldsMeasurements());
+				} else {
+					resultPointWise.put(patient, calculateDiffSquareByPoint());
+				}
 			}
 			
 //			if(resultCount != null) {
@@ -87,6 +95,34 @@ public class CalcByIndex extends ComparisonAttributes {
 			
 			diff_right_1 = StatisticsComparation.calc_diff_square_by_point(field1_right_1, field2_right_1, false);
 			diff_right_2 = StatisticsComparation.calc_diff_square_by_point(field1_right_2, field2_right_2, false);
+
+//		FileUtils.saveResultOnFile(diff_left_1, diff_left_2, diff_right_1, diff_right_2, evaluationFile);
+		
+			ratios[0] = diff_left_1;
+			ratios[1] = diff_left_2;
+			ratios[2] = diff_right_1;
+			ratios[3] = diff_right_2;
+		}
+		
+		return ratios;
+	}
+	
+	private static double[][][] getFieldsMeasurements() {
+//		System.out.print(patient+",\n");
+		double ratios[][][] = null;
+		double diff_left_1[][] = new double[10][10];
+		double diff_left_2[][] = new double[10][10];
+		double diff_right_1[][] = new double[10][10];
+		double diff_right_2[][] = new double[10][10];
+		
+		if(!checkFieldsNull()) {
+			ratios = new double[4][10][10];
+		
+			diff_left_1 = field1_left_1;
+			diff_left_2 = field1_left_2;
+			
+			diff_right_1 = field1_right_1;
+			diff_right_2 = field1_right_2;
 
 //		FileUtils.saveResultOnFile(diff_left_1, diff_left_2, diff_right_1, diff_right_2, evaluationFile);
 		

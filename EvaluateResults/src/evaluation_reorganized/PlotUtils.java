@@ -135,12 +135,14 @@ public class PlotUtils extends ComparisonAttributes {
 		int numberOfPointsToPlot = keys.size()*4;
 		Double [][]xDataTotal1 = new Double[2][numberOfPointsToPlot];
 		Double [][]yDataTotal1 = new Double[2][numberOfPointsToPlot];
+		int indexInsert = 0;
 		for (String string : keys) {
 			if(squareDiffs.get(string) != null) {
 				fieldsAll = squareDiffs.get(string);
 				for(int k = 0; k < fieldsAll.length; k++) {
+					System.out.println("################");
 					field = fieldsAll[k];
-					countIntern = 0;
+					countIntern = count*4;
 					for(int m = 0; m < field.length; m++) {
 						countIndex = 0;
 						for (int i = 0; i < field[m].length; i++) {
@@ -148,25 +150,129 @@ public class PlotUtils extends ComparisonAttributes {
 								if(map[i][j] == 'y') {
 									countIndex++;
 									if(countIndex == index) {
-										xDataTotal1[k][countIntern*count + countIntern] = field[m][i][j];
-										yDataTotal1[k][countIntern*count + countIntern] = (double)countIntern*count + countIntern;
+										indexInsert = countIntern;
+										xDataTotal1[k][indexInsert] = (double)indexInsert;
+										yDataTotal1[k][indexInsert] = field[m][i][j];
+										if(k ==1) {
+											System.out.println(field[m][i][j]);
+										}
 										countIntern++;
 									}
 								}
 							}
 						}
 					}
-					count++;
 				}
+				count++;
 			}
 		}
 		
+//		SampleXYDataset2 s = new SampleXYDataset2(2, numberOfPointsToPlot, xDataTotal1, yDataTotal1, 
+//				new String[]{"Prototype", "Humphrey"}) ;
 		SampleXYDataset2 s = new SampleXYDataset2(2, numberOfPointsToPlot, xDataTotal1, yDataTotal1, 
-				new String[]{"Prototype", "Humphrey"}) ;
-		ScatterPlotDemo1 plot = new ScatterPlotDemo1("Test samples - Covariance", s);
+				new String[]{"1", "2"}) ;
+//		ScatterPlotDemo1 plot = new ScatterPlotDemo1("Test samples - Covariance", s);
+		ScatterPlotDemo1 plot = new ScatterPlotDemo1("", s);
 		plot.pack();
         RefineryUtilities.centerFrameOnScreen(plot);
         plot.setVisible(true);
+		
+//		Double [][]xtemp1 = new Double[1][numberOfPointsToPlot];
+//		xtemp1[0] = xDataTotal1[0]; 
+//		Double [][]ytemp1 = new Double[1][numberOfPointsToPlot];
+//		ytemp1[0] = yDataTotal1[0]; 
+//		SampleXYDataset2 s = new SampleXYDataset2(1, numberOfPointsToPlot, xtemp1, ytemp1, 
+//						new String[]{"1"}) ;
+//		ScatterPlotDemo1 plot = new ScatterPlotDemo1("", s);
+//		plot.pack();
+//		RefineryUtilities.centerFrameOnScreen(plot);
+//		plot.setVisible(true);
+//        
+//		Double [][]xtemp2 = new Double[1][numberOfPointsToPlot];
+//		xtemp2[0] = xDataTotal1[1]; 
+//		Double [][]ytemp2 = new Double[1][numberOfPointsToPlot];
+//		ytemp2[0] = yDataTotal1[1]; 
+//        s = new SampleXYDataset2(1, numberOfPointsToPlot, xtemp2, ytemp2, 
+//				new String[]{"2"}) ;
+//		plot = new ScatterPlotDemo1("", s);
+//		plot.pack();
+//        RefineryUtilities.centerFrameOnScreen(plot);
+//        plot.setVisible(true);
+	}
+	
+	public static void plotFieldsByIndex(Map<String, double[][][]> squareDiffs, int index, boolean leftSide) {
+		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
+		int countIndex = 0;
+		int count = 0;
+		int countIntern = 0;
+		Set<String> keys = squareDiffs.keySet();
+		double[][] field = null;
+		double[][][] fieldsAll = null;
+//		int numberPoints = Utils.getNumberValidPoints(map);
+		int numberOfPointsToPlot = keys.size()*4;
+		Double [][]xDataTotal1 = new Double[2][numberOfPointsToPlot];
+		Double [][]yDataTotal1 = new Double[2][numberOfPointsToPlot];
+		int indexInsert = 0;
+		for (String string : keys) {
+			if(squareDiffs.get(string) != null) {
+				fieldsAll = squareDiffs.get(string);
+				for(int k = 0; k < fieldsAll.length; k++) {
+					System.out.println("################");
+					field = fieldsAll[k];
+					countIntern = count*4;
+					countIndex = 0;
+					for (int i = 0; i < field[m].length; i++) {
+						for (int j = 0; j < field[i].length; j++) {
+							if(map[i][j] == 'y') {
+								countIndex++;
+								if(countIndex == index) {
+									indexInsert = countIntern;
+									xDataTotal1[k][indexInsert] = (double)indexInsert;
+									yDataTotal1[k][indexInsert] = field[i][j];
+									if(k ==1) {
+										System.out.println(field[i][j]);
+									}
+									countIntern++;
+								}
+							}
+						}
+					}
+				}
+				count++;
+			}
+		}
+		
+//		SampleXYDataset2 s = new SampleXYDataset2(2, numberOfPointsToPlot, xDataTotal1, yDataTotal1, 
+//				new String[]{"Prototype", "Humphrey"}) ;
+		SampleXYDataset2 s = new SampleXYDataset2(2, numberOfPointsToPlot, xDataTotal1, yDataTotal1, 
+				new String[]{"1", "2"}) ;
+//		ScatterPlotDemo1 plot = new ScatterPlotDemo1("Test samples - Covariance", s);
+		ScatterPlotDemo1 plot = new ScatterPlotDemo1("", s);
+		plot.pack();
+        RefineryUtilities.centerFrameOnScreen(plot);
+        plot.setVisible(true);
+		
+//		Double [][]xtemp1 = new Double[1][numberOfPointsToPlot];
+//		xtemp1[0] = xDataTotal1[0]; 
+//		Double [][]ytemp1 = new Double[1][numberOfPointsToPlot];
+//		ytemp1[0] = yDataTotal1[0]; 
+//		SampleXYDataset2 s = new SampleXYDataset2(1, numberOfPointsToPlot, xtemp1, ytemp1, 
+//						new String[]{"1"}) ;
+//		ScatterPlotDemo1 plot = new ScatterPlotDemo1("", s);
+//		plot.pack();
+//		RefineryUtilities.centerFrameOnScreen(plot);
+//		plot.setVisible(true);
+//        
+//		Double [][]xtemp2 = new Double[1][numberOfPointsToPlot];
+//		xtemp2[0] = xDataTotal1[1]; 
+//		Double [][]ytemp2 = new Double[1][numberOfPointsToPlot];
+//		ytemp2[0] = yDataTotal1[1]; 
+//        s = new SampleXYDataset2(1, numberOfPointsToPlot, xtemp2, ytemp2, 
+//				new String[]{"2"}) ;
+//		plot = new ScatterPlotDemo1("", s);
+//		plot.pack();
+//        RefineryUtilities.centerFrameOnScreen(plot);
+//        plot.setVisible(true);
 	}
 	
 }

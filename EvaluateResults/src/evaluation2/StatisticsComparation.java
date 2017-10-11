@@ -187,9 +187,14 @@ public class StatisticsComparation {
 		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
 		
 		double diffSquare[][] = new double[field1.length][field1[0].length];
+		int count = 0;
 		for (int i = 0; i < field1.length; i++) {
 			for (int j = 0; j < field1[i].length; j++) {
 				if(map[i][j] == 'y') {
+					count++;
+					if(count == 1) {
+						System.out.println(Math.pow(field2[i][j] - field1[i][j], 2) + " - " + field1[i][j]);
+					}
 					diffSquare[i][j] = Math.pow(field2[i][j] - field1[i][j], 2);
 				}
 			}

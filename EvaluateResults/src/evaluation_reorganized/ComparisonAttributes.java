@@ -175,7 +175,7 @@ public class ComparisonAttributes {
 	}
 	
 	protected static void setUpFieldsHumphreyAndHumphreyMeans() {
-		setUpField1PrototypeResult();
+		setUpField1HumphreyResult();
 		setUpField2HumphreyMeans();
 	}
 	
