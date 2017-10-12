@@ -3,7 +3,6 @@ package evaluation_reorganized;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.jfree.ui.RefineryUtilities;
 
@@ -124,100 +123,22 @@ public class PlotUtils extends ComparisonAttributes {
 	}
 
 	public static void plotByFieldIndex(Map<String, double[][][][]> squareDiffs, int index, boolean leftSide) {
-		char[][] map = leftSide ? Constants.MAP_LEFT : Constants.MAP_RIGHT;
-		int countIndex = 0;
-		int count = 0;
-		int countIntern = 0;
-		Set<String> keys = squareDiffs.keySet();
-		double[][][] field = null;
-		double[][][][] fieldsAll = null;
-//		int numberPoints = Utils.getNumberValidPoints(map);
-		int numberOfPointsToPlot = keys.size()*4;
-		Double [][]xDataTotal1 = new Double[2][numberOfPointsToPlot];
-		Double [][]yDataTotal1 = new Double[2][numberOfPointsToPlot];
-		int indexInsert = 0;
-		int lessPatient = 0;
-		for (String string : keys) {
-			if(squareDiffs.get(string) != null) {
-				fieldsAll = squareDiffs.get(string);
-				for(int k = 0; k < fieldsAll.length; k++) {
-					System.out.println("################");
-					field = fieldsAll[k];
-					countIntern = count*4;
-					for(int m = 0; m < field.length; m++) {
-						countIndex = 0;
-						for (int i = 0; i < field[m].length; i++) {
-							for (int j = 0; j < field[m][i].length; j++) {
-								if(map[i][j] == 'y') {
-									countIndex++;
-									if(countIndex == index) {
-										indexInsert = countIntern;
-										xDataTotal1[k][indexInsert] = (double)indexInsert;
-										yDataTotal1[k][indexInsert] = field[m][i][j];
-										if(k ==1) {
-											System.out.println(field[m][i][j]);
-										}
-										countIntern++;
-									}
-								}
-							}
-						}
-					}
-				}
-				count++;
-			} else {
-				lessPatient++;
-				System.out.println("Less one patient");
-			}
-		}
+		Double [][][]valuesByIndex = Utils.getValuesByIndex(squareDiffs, index);
+		Double [][]xDataTotal1 = valuesByIndex[0];
+		Double [][]yDataTotal1 = valuesByIndex[1];
 		
-		setNullAsZero(xDataTotal1, yDataTotal1, lessPatient);
+		Utils.setNullAsZero(xDataTotal1);
+		Utils.setNullAsZero(yDataTotal1);
 		
 //		SampleXYDataset2 s = new SampleXYDataset2(2, numberOfPointsToPlot, xDataTotal1, yDataTotal1, 
 //				new String[]{"Prototype", "Humphrey"}) ;
-		SampleXYDataset2 s = new SampleXYDataset2(2, numberOfPointsToPlot, xDataTotal1, yDataTotal1, 
+		SampleXYDataset2 s = new SampleXYDataset2(2, xDataTotal1[0].length, xDataTotal1, yDataTotal1, 
 				new String[]{"1", "2"}) ;
 //		ScatterPlotDemo1 plot = new ScatterPlotDemo1("Test samples - Covariance", s);
 		ScatterPlotDemo1 plot = new ScatterPlotDemo1("", s);
 		plot.pack();
         RefineryUtilities.centerFrameOnScreen(plot);
         plot.setVisible(true);
-		
-//		Double [][]xtemp1 = new Double[1][numberOfPointsToPlot];
-//		xtemp1[0] = xDataTotal1[0]; 
-//		Double [][]ytemp1 = new Double[1][numberOfPointsToPlot];
-//		ytemp1[0] = yDataTotal1[0]; 
-//		SampleXYDataset2 s = new SampleXYDataset2(1, numberOfPointsToPlot, xtemp1, ytemp1, 
-//						new String[]{"1"}) ;
-//		ScatterPlotDemo1 plot = new ScatterPlotDemo1("", s);
-//		plot.pack();
-//		RefineryUtilities.centerFrameOnScreen(plot);
-//		plot.setVisible(true);
-//        
-//		Double [][]xtemp2 = new Double[1][numberOfPointsToPlot];
-//		xtemp2[0] = xDataTotal1[1]; 
-//		Double [][]ytemp2 = new Double[1][numberOfPointsToPlot];
-//		ytemp2[0] = yDataTotal1[1]; 
-//        s = new SampleXYDataset2(1, numberOfPointsToPlot, xtemp2, ytemp2, 
-//				new String[]{"2"}) ;
-//		plot = new ScatterPlotDemo1("", s);
-//		plot.pack();
-//        RefineryUtilities.centerFrameOnScreen(plot);
-//        plot.setVisible(true);
 	}
 
-	private static void setNullAsZero(Double[][] xDataTotal1, Double[][] yDataTotal1, int lessPatient) {
-		for (int i = 0; i < yDataTotal1.length; i++) {
-			for (int j = 0; j < yDataTotal1[i].length; j++) {
-				if(xDataTotal1[i][j] == null) {
-					xDataTotal1[i][j] = 0.0;
-				}
-				
-				if(yDataTotal1[i][j] == null) {
-					yDataTotal1[i][j] = 0.0;
-				}
-			}
-		}
-	}
-	
 }

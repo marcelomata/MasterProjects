@@ -15,12 +15,12 @@ public class CalcByIndex extends ComparisonAttributes {
 //		squareDiffsPrototype = processCov(2);
 //		System.out.println("################");
 //		squareDiffsHumphrey = processCov(3);
-		Map<String, double[][][][]> fieldsMeasurements = getFilds(1);
+		Map<String, double[][][][]> fieldsMeasurements = getFields(1);
 //	    Object[] allDiffsArray = new Object[] {squareDiffsPrototype, squareDiffsHumphrey};
 //	    Object[] allDiffsArray = new Object[] {squareDiffsPrototype};
 //		Map<String, double[][][][]> squareDiffsAll = getAllSquareDiffs(allDiffsArray);
 //		PlotUtils.plotByFieldIndex(squareDiffsAll, 1, true);
-		PlotUtils.plotByFieldIndex(fieldsMeasurements, 1, true);
+		PlotUtils.plotByFieldIndex(fieldsMeasurements, 2, true);
 	}
 	
 	private static Map<String, double[][][]> processCov(int typeFields) throws IOException {
@@ -29,20 +29,6 @@ public class CalcByIndex extends ComparisonAttributes {
 		return result;
 	}
 	
-	private static Map<String,double[][][][]> getFilds(int typeFields) throws IOException {
-		Map<String,double[][][][]> result = new HashMap<String, double[][][][]>();
-		setUpAttributes();
-		
-		for (String patient : keysPrototype) {
-			if(!setUpPatientDataToProcess(patient, typeFields)) {
-				continue;
-			}
-			result.put(patient, getFieldsMeasurements());
-		}
-		
-		return result;
-	}
-
 	private static void processCovByType(Map<String, double[][][]> resultPointWise, Map<String, int[]> resultCount, 
 				int typeFields) throws IOException {
 		setUpAttributes();
@@ -78,42 +64,6 @@ public class CalcByIndex extends ComparisonAttributes {
 		}
 		
 		return diffs;
-	}
-	
-	private static double[][][][] getFieldsMeasurements() {
-		double fields[][][][] = null;
-		double prototype_left_1[][] = new double[10][10];
-		double prototype_left_2[][] = new double[10][10];
-		double prototype_right_1[][] = new double[10][10];
-		double prototype_right_2[][] = new double[10][10];
-		double humphrey_left_1[][] = new double[10][10];
-		double humphrey_left_2[][] = new double[10][10];
-		double humphrey_right_1[][] = new double[10][10];
-		double humphrey_right_2[][] = new double[10][10];
-		
-		if(!checkFieldsNull()) {
-			fields = new double[2][4][10][10];
-		
-			prototype_left_1 = field1_left_1;
-			prototype_left_2 = field1_left_2;
-			prototype_right_1 = field1_right_1;
-			prototype_right_2 = field1_right_2;
-			humphrey_left_1 = field2_left_1;
-			humphrey_left_2 = field2_left_2;
-			humphrey_right_1 = field2_right_1;
-			humphrey_right_2 = field2_right_2;
-
-			fields[0][0] = prototype_left_1;
-			fields[0][1] = prototype_left_2;
-			fields[0][2] = prototype_right_1;
-			fields[0][3] = prototype_right_2;
-			fields[1][0] = humphrey_left_1;
-			fields[1][1] = humphrey_left_2;
-			fields[1][2] = humphrey_right_1;
-			fields[1][3] = humphrey_right_2;
-		}
-		
-		return fields;
 	}
 	
 	@SuppressWarnings("unchecked")
