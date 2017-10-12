@@ -8,10 +8,12 @@ import evaluation2.StatisticalMatrix;
 public class CalcCovariance extends ComparisonAttributes {
 
 	public static void main(String[] args) throws IOException {
-		int index = 2;
-		Map<String, double[][][][]> fieldsMeasurements = getFields(index);
-		double correlation = getCorrelationByIndex(fieldsMeasurements, index);
-		System.out.println(correlation);
+		int numberOfIndex = Utils.getNumberOfIndex();
+		for (int index = 1; index <= numberOfIndex; index++) {
+			Map<String, double[][][][]> fieldsMeasurements = getFields(index);
+			double correlation = getCorrelationByIndex(fieldsMeasurements, index);
+			System.out.println(correlation);
+		}
 	}
 	
 	public static double getCorrelationByIndex(Map<String, double[][][][]> squareDiffs, int index) {

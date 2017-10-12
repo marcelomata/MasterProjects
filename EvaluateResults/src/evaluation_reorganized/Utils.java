@@ -82,7 +82,7 @@ public class Utils {
 			if(allFields.get(string) != null) {
 				fieldsAll = allFields.get(string);
 				for(int k = 0; k < fieldsAll.length; k++) {
-					System.out.println("################");
+//					System.out.println("################");
 					field = fieldsAll[k];
 					countIntern = count*4;
 					for(int m = 0; m < field.length; m++) {
@@ -96,9 +96,9 @@ public class Utils {
 										indexInsert = countIntern;
 										xDataTotal1[k][indexInsert] = (double)indexInsert;
 										yDataTotal1[k][indexInsert] = field[m][i][j];
-										if(k ==1) {
-											System.out.println(field[m][i][j]);
-										}
+//										if(k ==1) {
+//											System.out.println(field[m][i][j]);
+//										}
 										countIntern++;
 									}
 								}
@@ -108,7 +108,7 @@ public class Utils {
 				}
 				count++;
 			} else {
-				System.out.println("Less one patient");
+//				System.out.println("Less one patient");
 			}
 		}
 		
@@ -146,6 +146,22 @@ public class Utils {
 			for (int j = 0; j < dataTotal[i].length; j++) {
 				if(dataTotal[i][j] == null) {
 					dataTotal[i][j] = 0.0;
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+
+	public static int getNumberOfIndex() {
+		return Math.min(getNumberChar(Constants.MAP_LEFT, 'y'), getNumberChar( Constants.MAP_RIGHT, 'y'));
+	}
+	
+	public static int getNumberChar(char map[][], char c) {
+		int count = 0;
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+				if(map[i][j] == c) {
 					count++;
 				}
 			}
