@@ -1,6 +1,7 @@
 package evaluation_reorganized;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -50,6 +51,12 @@ public class ComparisonAttributes {
 	protected static double[][] field2_right_1 = null;
 	protected static double[][] field2_right_2 = null;
 	
+	
+	protected static void loadAllData(String respectiveHumphreyKey, String patient) {
+		readDataDevices(respectiveHumphreyKey, patient);
+		boolean isDennis = patient.equalsIgnoreCase("Dennis");
+		setUpDevicesFields(leftReportPrototypeData, rightReportPrototypeData, leftReportHumphreyData, rightReportHumphreyData, isDennis);
+	}
 	
 	protected static void setUpAttributes() {
 		reportsHumphreyDir = new File("./reports_patients_humphrey_txt/");
@@ -101,6 +108,32 @@ public class ComparisonAttributes {
 		leftReportPrototypeData = PrototypeUtils.getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.LEFT);
 		rightReportHumphreyData = HumphreyUtils.getReportHumphreyData(reportsHumphreyByPatient.get(respectiveHumphewyKey), 'D');
 		rightReportPrototypeData = PrototypeUtils.getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.RIGHT);
+	}
+	
+	protected static boolean setUpPatientDataToProcess(String patient, int typeFields) throws IOException {
+		String respectiveHumphreyKey = Utils.getHumphreyKeyByPrototypeKey(patient, keysHumphrey);
+		if(respectiveHumphreyKey.isEmpty()) {
+			return false;
+		}
+		Utils.setEvaluationFile(patient, evaluationDir);
+		loadAllData(respectiveHumphreyKey, patient);
+		setFieldsByType(typeFields);
+		return true;
+	}
+	
+	protected static void setFieldsByType(int typeFields) {
+//		setUpFieldsDevicesResult();
+//		setUpFieldsPrototypeAndProtMeans();
+		switch(typeFields) {
+			case 2 :
+				setUpFieldsPrototypeAndHumphreyMeans();
+				break;
+			case 3 :
+				setUpFieldsHumphreyAndHumphreyMeans();
+				break;
+			default:
+				setUpFieldsDevicesResult();
+		}
 	}
 	
 	protected static void setUpFieldsDevicesResult() {

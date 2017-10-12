@@ -1,6 +1,7 @@
 package evaluation_reorganized;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Set;
 
 import evaluation2.FileType;
@@ -51,6 +52,15 @@ public class Utils {
 			}
 		}
 		return count;
+	}
+	
+	public static File setEvaluationFile(String patient, File evaluationDir) throws IOException {
+		String evaluationName = evaluationDir.getAbsolutePath()+"/"+patient+"_Prototype.txt";
+		File evaluationFile = new File(evaluationName);
+		if(!evaluationFile.exists()) {
+			evaluationFile.createNewFile();
+		}
+		return evaluationFile;
 	}
 
 }
