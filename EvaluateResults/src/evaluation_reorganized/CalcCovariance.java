@@ -12,7 +12,11 @@ public class CalcCovariance extends ComparisonAttributes {
 		for (int index = 1; index <= numberOfIndex; index++) {
 			Map<String, double[][][][]> fieldsMeasurements = getFields(index);
 			double correlation = getCorrelationByIndex(fieldsMeasurements, index);
-			System.out.println(correlation);
+			System.out.println(index + " - " + correlation);
+		}
+		int []indexToPlot = {49};
+		for (int i = 0; i < indexToPlot.length; i++) {
+			PlotUtils.plotByFieldIndex(getFields(indexToPlot[i]), indexToPlot[i]);
 		}
 	}
 	

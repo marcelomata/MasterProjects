@@ -122,7 +122,7 @@ public class PlotUtils extends ComparisonAttributes {
 //		plot.plot();
 	}
 
-	public static void plotByFieldIndex(Map<String, double[][][][]> squareDiffs, int index, boolean leftSide) {
+	public static void plotByFieldIndex(Map<String, double[][][][]> squareDiffs, int index) {
 		Double [][][]valuesByIndex = Utils.getValuesByIndex(squareDiffs, index);
 		Double [][]xDataTotal1 = valuesByIndex[0];
 		Double [][]yDataTotal1 = valuesByIndex[1];
