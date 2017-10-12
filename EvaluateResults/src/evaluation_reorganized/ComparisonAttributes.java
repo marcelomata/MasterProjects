@@ -1,12 +1,15 @@
 package evaluation_reorganized;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import br.ufrgs.campimeter.examination.enums.EnumEye;
 import br.ufrgs.campimeter.examination.visualfield.file.LoaderVisualField;
+import evaluation2.Constants;
 import evaluation2.LoadMathias;
 import evaluation2.ReportData;
 import evaluation2.StatisticsComparation;
@@ -50,6 +53,11 @@ public class ComparisonAttributes {
 	protected static double[][] field2_right_1 = null;
 	protected static double[][] field2_right_2 = null;
 	
+	protected static void loadAllData(String respectiveHumphreyKey, String patient) {
+		readDataDevices(respectiveHumphreyKey, patient);
+		boolean isDennis = patient.equalsIgnoreCase("Dennis");
+		setUpDevicesFields(leftReportPrototypeData, rightReportPrototypeData, leftReportHumphreyData, rightReportHumphreyData, isDennis);
+	}
 	
 	protected static void setUpAttributes() {
 		reportsHumphreyDir = new File("./reports_patients_humphrey_txt/");
@@ -91,6 +99,56 @@ public class ComparisonAttributes {
 		field_right_humphrey_2 = !isDennis ? rightReportHumphreyData.get(1).getNumericIntensities() : null;
 	}
 	
+	protected static double[][][][] getFieldsMeasurements() {
+		double fields[][][][] = null;
+		double prototype_left_1[][] = new double[10][10];
+		double prototype_left_2[][] = new double[10][10];
+		double prototype_right_1[][] = new double[10][10];
+		double prototype_right_2[][] = new double[10][10];
+		double humphrey_left_1[][] = new double[10][10];
+		double humphrey_left_2[][] = new double[10][10];
+		double humphrey_right_1[][] = new double[10][10];
+		double humphrey_right_2[][] = new double[10][10];
+		
+		if(!checkFieldsNull()) {
+			fields = new double[2][4][10][10];
+		
+			prototype_left_1 = field1_left_1;
+			prototype_left_2 = field1_left_2;
+			prototype_right_1 = field1_right_1;
+			prototype_right_2 = field1_right_2;
+			humphrey_left_1 = field2_left_1;
+			humphrey_left_2 = field2_left_2;
+			humphrey_right_1 = field2_right_1;
+			humphrey_right_2 = field2_right_2;
+
+			fields[0][0] = prototype_left_1;
+			fields[0][1] = prototype_left_2;
+			fields[0][2] = prototype_right_1;
+			fields[0][3] = prototype_right_2;
+			fields[1][0] = humphrey_left_1;
+			fields[1][1] = humphrey_left_2;
+			fields[1][2] = humphrey_right_1;
+			fields[1][3] = humphrey_right_2;
+		}
+		
+		return fields;
+	}
+	
+	protected static Map<String,double[][][][]> getFields(int typeFields) throws IOException {
+		Map<String,double[][][][]> result = new HashMap<String, double[][][][]>();
+		setUpAttributes();
+		
+		for (String patient : keysPrototype) {
+			if(!setUpPatientDataToProcess(patient, typeFields)) {
+				continue;
+			}
+			result.put(patient, getFieldsMeasurements());
+		}
+		
+		return result;
+	}
+	
 	protected static boolean checkFieldsNull() {
 		return field1_left_1 == null || field2_left_1 == null || field1_left_2 == null || field2_left_2 == null ||
 				field1_right_1 == null || field2_right_1 == null || field1_right_2 == null || field2_right_2 == null;
@@ -101,6 +159,51 @@ public class ComparisonAttributes {
 		leftReportPrototypeData = PrototypeUtils.getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.LEFT);
 		rightReportHumphreyData = HumphreyUtils.getReportHumphreyData(reportsHumphreyByPatient.get(respectiveHumphewyKey), 'D');
 		rightReportPrototypeData = PrototypeUtils.getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.RIGHT);
+	}
+	
+	protected static boolean setUpPatientDataToProcess(String patient, int typeFields) throws IOException {
+		String respectiveHumphreyKey = Utils.getHumphreyKeyByPrototypeKey(patient, keysHumphrey);
+		if(respectiveHumphreyKey.isEmpty()) {
+			return false;
+		}
+		Utils.setEvaluationFile(patient, evaluationDir);
+		loadAllData(respectiveHumphreyKey, patient);
+		setFieldsByType(typeFields);
+		return true;
+	}
+	
+	protected static double getMeanByIndex(int typeMean, int index, boolean leftSide) {
+		switch(typeMean) {
+			case 1:
+				return getHumphreyMeanByIndex(index, leftSide);
+			case 2:
+				return getPrototypeMeanByIndex(index, leftSide);
+		}
+		
+		return 0.0;
+	}
+	
+	private static double getHumphreyMeanByIndex(int index, boolean leftSide) {
+		return Utils.getValueByIndex(meansHumphrey, index, leftSide); 
+	}
+	
+	private static double getPrototypeMeanByIndex(int index, boolean leftSide) {
+		return Utils.getValueByIndex(means, index, leftSide); 
+	}
+
+	protected static void setFieldsByType(int typeFields) {
+//		setUpFieldsDevicesResult();
+//		setUpFieldsPrototypeAndProtMeans();
+		switch(typeFields) {
+			case 2 :
+				setUpFieldsPrototypeAndHumphreyMeans();
+				break;
+			case 3 :
+				setUpFieldsHumphreyAndHumphreyMeans();
+				break;
+			default:
+				setUpFieldsDevicesResult();
+		}
 	}
 	
 	protected static void setUpFieldsDevicesResult() {

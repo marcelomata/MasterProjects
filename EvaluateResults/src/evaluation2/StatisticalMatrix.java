@@ -2,25 +2,34 @@ package evaluation2;
 
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.stat.correlation.Covariance;
-
-import evaluation_reorganized.PrintUtils;
 
 public class StatisticalMatrix {
-
-	public static void main(String[] args) {
-		
+	
+	public static double[][] getVariance(Double[][] data, double meanByIndex[], int takeOutValues) {
+		double[][] variance = new double[data.length][data[0].length - takeOutValues];
+		for (int i = 0; i < variance.length; i++) {
+			for (int j = 0; j < variance[i].length - takeOutValues; j++) {
+				variance[i][j] = data[i][j] - meanByIndex[i];
+			}
+		}
+		return variance;
 	}
 	
-	public static void calculateCovarianceMatrix() {
-		double[][] data = new double[][]{
-			  {1, 2, 3},
-			  {2, 4, 6}
-			};
-		RealMatrix mx = MatrixUtils.createRealMatrix(data);
-		RealMatrix cov = new Covariance(mx).getCovarianceMatrix();
-		PrintUtils.printField(cov.getData());
-		
+	public static double[][] getCovarianceMatrix(double[][] data) {
+		RealMatrix realData = MatrixUtils.createRealMatrix(data);
+		RealMatrix realDataTransposed = realData.transpose();
+		RealMatrix covarianceMatrix = realData.multiply(realDataTransposed);
+		double [][]covarianceMatrixResult = covarianceMatrix.getData();
+		for (int i = 0; i < covarianceMatrixResult.length; i++) {
+			for (int j = 0; j < covarianceMatrixResult[i].length; j++) {
+				covarianceMatrixResult[i][j] = covarianceMatrixResult[i][j] / (double)(data[0].length - 1);
+			}
+		}
+		return covarianceMatrixResult;
+	}
+
+	public static double getCorrelation2D(double[][] covarianceMatrix) {
+		return covarianceMatrix[0][1] / Math.sqrt(covarianceMatrix[0][0] * covarianceMatrix[1][1]);
 	}
 	
 }
