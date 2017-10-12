@@ -20,7 +20,7 @@ public class CalcByIndex extends ComparisonAttributes {
 //	    Object[] allDiffsArray = new Object[] {squareDiffsPrototype};
 //		Map<String, double[][][][]> squareDiffsAll = getAllSquareDiffs(allDiffsArray);
 //		PlotUtils.plotByFieldIndex(squareDiffsAll, 1, true);
-		PlotUtils.plotByFieldIndex(fieldsMeasurements, 2, true);
+		PlotUtils.plotByFieldIndex(fieldsMeasurements, 2);
 	}
 	
 	private static Map<String, double[][][]> processCov(int typeFields) throws IOException {
