@@ -22,9 +22,9 @@ public class Main {
 	public static void main(String[] args) {
 		//calcREMQ();
 		//calcDM();
-//		calcMDP(); //Check about the error in Prototype calculus
+		calcMDP(); //Check about the error in Prototype calculus
 //		calcEV();
-		calcMDPC();
+//		calcMDPC();
 	}
 	
 	public static void calcREMQ() {

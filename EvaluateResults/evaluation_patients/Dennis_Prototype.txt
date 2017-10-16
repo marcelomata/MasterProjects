@@ -1,0 +1,4 @@
+MDP Prototype Left = 6.237103634023443
+MDP Prototype Left = 3.2427716725834674
+MDP Prototype Right = 2.098029166112758
+MDP Prototype Right = 4.327877856628266

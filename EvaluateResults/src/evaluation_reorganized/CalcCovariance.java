@@ -33,7 +33,5 @@ public class CalcCovariance extends ComparisonAttributes {
 		double correlation = StatisticalMatrix.getCorrelation2D(covarianceMatrix);
 		return correlation;
 	}
-
-	
 	
 }

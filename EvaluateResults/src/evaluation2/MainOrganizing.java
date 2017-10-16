@@ -25,10 +25,10 @@ public class MainOrganizing {
 	public static void main(String[] args) {
 //		calcREMQ();
 		//calcDM();
-//		calcMDP(); //Check about the error
+		calcMDP(); //Check about the error
 //		calcEV();
 //		calcMDPC();
-		calcR();
+//		calcR();
 	}
 	
 	private static void calcR() {

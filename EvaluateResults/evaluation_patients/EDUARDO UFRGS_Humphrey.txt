@@ -1,2 +1,4 @@
-SQ_total Humphrey Left = [D@355da254
-SQ_total Humphrey Right = [D@355da254
+MDP Humphrey Left = 1.23
+MDP Humphrey Left = 1.05
+MDP Humphrey Right = 1.75
+MDP Humphrey Right = 1.19

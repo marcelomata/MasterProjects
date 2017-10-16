@@ -1,1 +1,4 @@
-SQ_res Left = 44.24764055823748SQ_res Right = [D@54bedef2
+MDP Prototype Left = 5.162553280127044
+MDP Prototype Left = 6.42380852221871
+MDP Prototype Right = 2.2721252782641725
+MDP Prototype Right = 2.5345233323484537

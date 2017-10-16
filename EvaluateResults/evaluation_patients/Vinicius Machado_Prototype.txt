@@ -1,1 +1,4 @@
-SQ_total Prototype Left = [D@6ff3c5b5SQ_total Prototype Right = [D@6ff3c5b5
+MDP Prototype Left = 11.191461531401526
+MDP Prototype Left = 11.191461531401526
+MDP Prototype Right = 4.030138946513552
+MDP Prototype Right = 3.3453641851675173
