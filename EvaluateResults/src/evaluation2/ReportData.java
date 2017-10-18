@@ -89,6 +89,7 @@ public class ReportData {
 	}
 	
 	public double[][] getNumericIntensities() {
+		System.out.println(intensities[8][6]);
 		return intensities;
 	}
 	

@@ -133,9 +133,10 @@ public class PlotUtils extends ComparisonAttributes {
 //		SampleXYDataset2 s = new SampleXYDataset2(2, numberOfPointsToPlot, xDataTotal1, yDataTotal1, 
 //				new String[]{"Prototype", "Humphrey"}) ;
 		SampleXYDataset2 s = new SampleXYDataset2(2, xDataTotal1[0].length, xDataTotal1, yDataTotal1, 
-				new String[]{"1", "2"}) ;
+				new String[]{"Protótipo", "Humphrey"}) ;
 //		ScatterPlotDemo1 plot = new ScatterPlotDemo1("Test samples - Covariance", s);
-		ScatterPlotDemo1 plot = new ScatterPlotDemo1("", s);
+		String title = "Medições no ponto com pior correlação";
+		ScatterPlotDemo1 plot = new ScatterPlotDemo1(title, s);
 		plot.pack();
         RefineryUtilities.centerFrameOnScreen(plot);
         plot.setVisible(true);

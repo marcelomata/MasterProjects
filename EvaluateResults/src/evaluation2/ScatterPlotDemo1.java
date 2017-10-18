@@ -26,14 +26,14 @@ public class ScatterPlotDemo1 extends ApplicationFrame {
      */
     public ScatterPlotDemo1(String title, SampleXYDataset2 s) {
         super(title);
-        JPanel chartPanel = createDemoPanel(s);
+        JPanel chartPanel = createDemoPanel(s, title);
         chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
         setContentPane(chartPanel);
     }
 
-    public static JFreeChart createChart(XYDataset dataset) {
-        JFreeChart chart = ChartFactory.createScatterPlot("Estimativas e mÃ©dias do Humphrey e do protÃ³tipo",
-                "Pontos do campo visual", "Intensidade (dB)", dataset, PlotOrientation.VERTICAL, true, true, false);
+    public static JFreeChart createChart(XYDataset dataset, String title) {
+        JFreeChart chart = ChartFactory.createScatterPlot(title,
+                "Medições", "Intensidade (dB)", dataset, PlotOrientation.VERTICAL, true, true, false);
 
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setNoDataMessage("NO DATA");
@@ -79,8 +79,8 @@ public class ScatterPlotDemo1 extends ApplicationFrame {
      *
      * @return A panel.
      */
-    public static JPanel createDemoPanel(SampleXYDataset2 s) {
-        JFreeChart chart = createChart(s);
+    public static JPanel createDemoPanel(SampleXYDataset2 s, String title) {
+        JFreeChart chart = createChart(s, title);
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setMouseWheelEnabled(true);
         return chartPanel;
