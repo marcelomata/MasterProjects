@@ -9,7 +9,6 @@ import java.util.Set;
 
 import br.ufrgs.campimeter.examination.enums.EnumEye;
 import br.ufrgs.campimeter.examination.visualfield.file.LoaderVisualField;
-import evaluation2.Constants;
 import evaluation2.LoadMathias;
 import evaluation2.ReportData;
 import evaluation2.StatisticsComparation;
@@ -97,6 +96,7 @@ public class ComparisonAttributes {
 						rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble() : LoadMathias.intensitiesMathiasRight2;
 		field_right_humphrey_1 = !isDennis ? rightReportHumphreyData.get(0).getNumericIntensities() : null;
 		field_right_humphrey_2 = !isDennis ? rightReportHumphreyData.get(1).getNumericIntensities() : null;
+		
 	}
 	
 	protected static double[][][][] getFieldsMeasurements() {
@@ -135,13 +135,16 @@ public class ComparisonAttributes {
 		return fields;
 	}
 	
-	protected static Map<String,double[][][][]> getFields(int typeFields) throws IOException {
+	protected static Map<String,double[][][][]> getFields(int typeFields, boolean print, int typeOfprint) throws IOException {
 		Map<String,double[][][][]> result = new HashMap<String, double[][][][]>();
 		setUpAttributes();
 		
 		for (String patient : keysPrototype) {
 			if(!setUpPatientDataToProcess(patient, typeFields)) {
 				continue;
+			}
+			if(print) {
+				printDeviceFields(patient, typeOfprint);
 			}
 			result.put(patient, getFieldsMeasurements());
 		}
@@ -152,6 +155,16 @@ public class ComparisonAttributes {
 	protected static boolean checkFieldsNull() {
 		return field1_left_1 == null || field2_left_1 == null || field1_left_2 == null || field2_left_2 == null ||
 				field1_right_1 == null || field2_right_1 == null || field1_right_2 == null || field2_right_2 == null;
+	}
+	
+	protected static boolean checkFieldsDevicesNull() {
+		return field_left_prototype_1 == null || field_left_prototype_2 == null || field_left_humphrey_1 == null || field_left_humphrey_2 == null ||
+				field_right_prototype_1 == null || field_right_prototype_2 == null || field_right_humphrey_1 == null || field_right_humphrey_2 == null;
+	}
+	
+	protected static boolean checkFieldsDevicesIndexZero(int row, int column) {
+		return field_left_prototype_1[row][column] == 0 || field_left_prototype_2[row][column] == 0 || field_left_humphrey_1[row][column] == 0 || field_left_humphrey_2[row][column] == 0 ||
+				field_right_prototype_1[row][column] == 0 || field_right_prototype_2[row][column] == 0 || field_right_humphrey_1[row][column] == 0 || field_right_humphrey_2[row][column] == 0;
 	}
 	
 	protected static void readDataDevices(String respectiveHumphewyKey, String patient) {
@@ -297,4 +310,36 @@ public class ComparisonAttributes {
 		setUpField2HumphreyResult();
 	}
 
+	protected static void printDeviceFields(String patient, int typeOfPrint) {
+//		System.out.println("Patient - " + patient);
+		int row = 8;
+		int column = 6;
+		if(!checkFieldsDevicesNull()) {
+			if(typeOfPrint == 1 || typeOfPrint == 3) {
+				if(checkFieldsDevicesIndexZero(row, column)) {
+					System.out.println("Patient - " + patient);
+				}
+//				System.out.print("field_left_prototype_1 - ");
+				System.out.println(field_left_prototype_1[row][column]);
+//				System.out.print("field_left_prototype_2 - ");
+				System.out.println(field_left_prototype_2[row][column]);
+//				System.out.print("field_right_prototype_1 - ");
+				System.out.println(field_right_prototype_1[row][column]);
+//				System.out.print("field_right_prototype_2 - ");
+				System.out.println(field_right_prototype_2[row][column]);
+			}
+			
+			if(typeOfPrint == 2 || typeOfPrint == 3) {
+//				System.out.print("field_left_humphrey_1 - ");
+				System.out.println(field_left_humphrey_1[row][column]);
+//				System.out.print("field_left_humphrey_2 - ");
+				System.out.println(field_left_humphrey_2[row][column]);
+//				System.out.print("field_right_humphrey_1 - ");
+				System.out.println(field_right_humphrey_1[row][column]);
+//				System.out.print("field_right_humphrey_2 - ");
+				System.out.println(field_right_humphrey_2[row][column]);
+			}
+		}
+//		System.out.println("##############################");
+	}
 }

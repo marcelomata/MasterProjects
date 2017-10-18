@@ -351,7 +351,7 @@ public class StatisticsComparation {
 		double[][] means = new double[10][10];
 		
 		int count = reportsHumphreyData.size();
-		double [][]intensities;
+		double [][]intensities = null;
 		for (ReportData report : reportsHumphreyData) {
 			intensities = report.getNumericIntensities();
 			for (int i = 0; i < means.length; i++) {
@@ -360,7 +360,7 @@ public class StatisticsComparation {
 				}
 			}
 		}
-
+		
 		means = normalize(means, count);
 		
 		return means;

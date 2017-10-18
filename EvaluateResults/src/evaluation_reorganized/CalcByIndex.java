@@ -15,7 +15,9 @@ public class CalcByIndex extends ComparisonAttributes {
 //		squareDiffsPrototype = processCov(2);
 //		System.out.println("################");
 //		squareDiffsHumphrey = processCov(3);
-		Map<String, double[][][][]> fieldsMeasurements = getFields(1);
+		boolean print = false;
+		int typeOfPrint = 0;
+		Map<String, double[][][][]> fieldsMeasurements = getFields(1, print, typeOfPrint);
 //	    Object[] allDiffsArray = new Object[] {squareDiffsPrototype, squareDiffsHumphrey};
 //	    Object[] allDiffsArray = new Object[] {squareDiffsPrototype};
 //		Map<String, double[][][][]> squareDiffsAll = getAllSquareDiffs(allDiffsArray);

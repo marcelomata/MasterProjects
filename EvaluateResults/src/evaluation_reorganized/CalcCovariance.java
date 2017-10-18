@@ -9,15 +9,19 @@ public class CalcCovariance extends ComparisonAttributes {
 
 	public static void main(String[] args) throws IOException {
 		int numberOfIndex = Utils.getNumberOfIndex();
+		boolean print = true;
+		int typeOfPrint = 1;
+		getFields(49, print,typeOfPrint);
+		print = false;
 		for (int index = 1; index <= numberOfIndex; index++) {
-			Map<String, double[][][][]> fieldsMeasurements = getFields(index);
+			Map<String, double[][][][]> fieldsMeasurements = getFields(index, print,typeOfPrint);
 			double correlation = getCorrelationByIndex(fieldsMeasurements, index);
 			//System.out.println(index + " - " + correlation);
-			System.out.println(correlation);
+//			System.out.println(correlation);
 		}
 		int []indexToPlot = {49};
 		for (int i = 0; i < indexToPlot.length; i++) {
-			PlotUtils.plotByFieldIndex(getFields(indexToPlot[i]), indexToPlot[i]);
+			PlotUtils.plotByFieldIndex(getFields(indexToPlot[i], print, typeOfPrint), indexToPlot[i]);
 		}
 	}
 	
