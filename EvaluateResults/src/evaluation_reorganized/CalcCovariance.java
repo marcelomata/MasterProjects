@@ -64,14 +64,17 @@ public class CalcCovariance extends ComparisonAttributes {
 			if(lineSplit.length > 1) {
 				countNumbers = countNumbers(lineSplit);
 				startPosSplit = lineSplit.length - countNumbers;
-				startPos = 10 - countNumbers;
+				startPos = 10 - (10 - countNumbers) - 1;
 				for (int i = startPosSplit; i < lineSplit.length; i++) {
 					field[lineIndex][startPos] = Float.parseFloat(lineSplit[i]);
 				}
 				lineIndex++;
-			} else {
+			} else if(lineSplit.length == 1) {
 				lineIndex = 1;
 				left = !left;
+			} else {
+				lineIndex = 1;
+				continue;
 			}
 			System.out.println();
 		}
