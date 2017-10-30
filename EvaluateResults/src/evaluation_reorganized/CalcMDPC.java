@@ -9,7 +9,7 @@ import java.util.Set;
 import br.ufrgs.campimeter.examination.enums.EnumEye;
 import br.ufrgs.campimeter.examination.visualfield.file.LoaderVisualField;
 import br.ufrgs.campimeter.examination.visualfield.file.VisualFieldFileLoaderV1_0;
-import evaluation2.LoadMathias;
+import evaluation2.LoadManually;
 import evaluation2.ReportData;
 import evaluation2.StatisticsComparation;
 
@@ -178,10 +178,10 @@ public class CalcMDPC {
 					fw.write("MDPC Prototype Right = "+mdpc+"\n");
 					System.out.println(mdpc+",");
 				} else {
-					ev = StatisticsComparation.EV(LoadMathias.intensitiesMathiasRight1, LoadMathias.intensitiesMathiasRight2, variances2, false);
-					mdp1 = StatisticsComparation.MDP(LoadMathias.intensitiesMathiasRight1, variances, means, false);
+					ev = StatisticsComparation.EV(LoadManually.intensitiesMathiasRight1, LoadManually.intensitiesMathiasRight2, variances2, false);
+					mdp1 = StatisticsComparation.MDP(LoadManually.intensitiesMathiasRight1, variances, means, false);
 //					mdp1 = Math.sqrt(mdp1);
-					mdp2 = StatisticsComparation.MDP(LoadMathias.intensitiesMathiasRight2, variances, means, false);
+					mdp2 = StatisticsComparation.MDP(LoadManually.intensitiesMathiasRight2, variances, means, false);
 //					mdp2 = Math.sqrt(mdp2);
 					mdpc = StatisticsComparation.MDPC(mdp1, ev, k);
 					//mdpc = Math.sqrt(mdpc);

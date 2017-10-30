@@ -9,7 +9,7 @@ import org.jfree.ui.RefineryUtilities;
 import br.ufrgs.campimeter.examination.enums.EnumEye;
 import br.ufrgs.campimeter.examination.visualfield.file.LoaderVisualField;
 import evaluation2.Constants;
-import evaluation2.LoadMathias;
+import evaluation2.LoadManually;
 import evaluation2.ReportData;
 import evaluation2.SampleXYDataset2;
 import evaluation2.ScatterPlotDemo1;
@@ -49,8 +49,8 @@ public class PlotUtils extends ComparisonAttributes {
 					plot(false, rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), rightReportHumphreyData.get(0).getNumericIntensities(), means, meansHumphrey, false, new String[] {"Prot贸tipo", "Humphrey", "M茅dia no prot贸tipo", "M茅dia no Humphrey"});
 					plot(false, rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), rightReportHumphreyData.get(1).getNumericIntensities(), means, meansHumphrey, false, new String[] {"Prot贸tipo", "Humphrey", "M茅dia no prot贸tipo", "M茅dia no Humphrey"});
 				} else if(!patient.equalsIgnoreCase("Dennis")) {
-					plot(false, LoadMathias.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), means, meansHumphrey, false, new String[] {"Prot贸tipo", "Humphrey", "M茅dia no prot贸tipo", "M茅dia no Humphrey"});
-					plot(false, LoadMathias.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), means, meansHumphrey, false, new String[] {"Prot贸tipo", "Humphrey", "M茅dia no prot贸tipo", "M茅dia no Humphrey"});
+					plot(false, LoadManually.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), means, meansHumphrey, false, new String[] {"Prot贸tipo", "Humphrey", "M茅dia no prot贸tipo", "M茅dia no Humphrey"});
+					plot(false, LoadManually.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), means, meansHumphrey, false, new String[] {"Prot贸tipo", "Humphrey", "M茅dia no prot贸tipo", "M茅dia no Humphrey"});
 				}
 				return;
 			}
@@ -122,8 +122,8 @@ public class PlotUtils extends ComparisonAttributes {
 //		plot.plot();
 	}
 
-	public static void plotByFieldIndex(Map<String, double[][][][]> squareDiffs, int index) {
-		Double [][][]valuesByIndex = Utils.getValuesByIndex(squareDiffs, index);
+	public static void plotByFieldIndex(Map<String, double[][][][]> squareDiffs, int index, int side) {
+		Double [][][]valuesByIndex = Utils.getValuesByIndex(squareDiffs, index, side);
 		Double [][]xDataTotal1 = valuesByIndex[0];
 		Double [][]yDataTotal1 = valuesByIndex[1];
 		
@@ -133,9 +133,9 @@ public class PlotUtils extends ComparisonAttributes {
 //		SampleXYDataset2 s = new SampleXYDataset2(2, numberOfPointsToPlot, xDataTotal1, yDataTotal1, 
 //				new String[]{"Prototype", "Humphrey"}) ;
 		SampleXYDataset2 s = new SampleXYDataset2(2, xDataTotal1[0].length, xDataTotal1, yDataTotal1, 
-				new String[]{"Prot髏ipo", "Humphrey"}) ;
+				new String[]{"Prot贸tipo", "Humphrey"}) ;
 //		ScatterPlotDemo1 plot = new ScatterPlotDemo1("Test samples - Covariance", s);
-		String title = "Medi珲es no ponto com pior correla玢o";
+		String title = "Medi莽玫es no ponto com pior correla莽茫o";
 		ScatterPlotDemo1 plot = new ScatterPlotDemo1(title, s);
 		plot.pack();
         RefineryUtilities.centerFrameOnScreen(plot);

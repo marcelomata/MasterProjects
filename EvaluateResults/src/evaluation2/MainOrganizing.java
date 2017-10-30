@@ -180,7 +180,7 @@ public class MainOrganizing {
 				
 				rightReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.RIGHT);
 				if(patient.equalsIgnoreCase("Mathias")) {
-					LoadMathias.calcReports();
+					LoadManually.calcReports();
 				} else {
 					if(rightReportPrototypeData.size() > 1) {
 						double intensities1[][];
@@ -331,10 +331,10 @@ public class MainOrganizing {
 					fw.write("DM Prototype Right = "+dm+"\n");
 					System.out.println(dm+",");
 				} else {
-					dm = StatisticsComparation.DM(LoadMathias.intensitiesMathiasRight1, variances, means, false);
+					dm = StatisticsComparation.DM(LoadManually.intensitiesMathiasRight1, variances, means, false);
 					fw.write("DM Prototype Right = "+dm+"\n");
 					System.out.print(dm+",");
-					dm = StatisticsComparation.DM(LoadMathias.intensitiesMathiasRight2, variances, means, false);
+					dm = StatisticsComparation.DM(LoadManually.intensitiesMathiasRight2, variances, means, false);
 					fw.write("DM Prototype Right = "+dm+"\n");
 					System.out.print(dm+",");
 				}
@@ -472,11 +472,11 @@ public class MainOrganizing {
 					fw.write("DM Prototype Right = "+mdp+"\n");
 					System.out.println(mdp+",");
 				} else {
-					mdp = StatisticsComparation.MDP(LoadMathias.intensitiesMathiasRight1, variances, means, false);
+					mdp = StatisticsComparation.MDP(LoadManually.intensitiesMathiasRight1, variances, means, false);
 					mdp = Math.sqrt(mdp);
 					fw.write("DM Prototype Right = "+mdp+"\n");
 					System.out.print(mdp+",");
-					mdp = StatisticsComparation.MDP(LoadMathias.intensitiesMathiasRight2, variances, means, false);
+					mdp = StatisticsComparation.MDP(LoadManually.intensitiesMathiasRight2, variances, means, false);
 					mdp = Math.sqrt(mdp);
 					fw.write("DM Prototype Right = "+mdp+"\n");
 					System.out.print(mdp+",");
@@ -670,9 +670,9 @@ public class MainOrganizing {
 						System.out.println(ev+",");					
 					} else {
 						double intensities1[][];
-						intensities1 = LoadMathias.intensitiesMathiasRight1;
+						intensities1 = LoadManually.intensitiesMathiasRight1;
 						double intensities2[][];
-						intensities2 = LoadMathias.intensitiesMathiasRight2;
+						intensities2 = LoadManually.intensitiesMathiasRight2;
 						
 //						if(patient.equalsIgnoreCase(patientName)) {
 //							System.out.println();
@@ -887,10 +887,10 @@ public class MainOrganizing {
 					fw.write("MDPC Prototype Right = "+mdpc+"\n");
 					System.out.println(mdpc+",");
 				} else {
-					ev = StatisticsComparation.EV(LoadMathias.intensitiesMathiasRight1, LoadMathias.intensitiesMathiasRight2, variances2, false);
-					mdp1 = StatisticsComparation.MDP(LoadMathias.intensitiesMathiasRight1, variances, means, false);
+					ev = StatisticsComparation.EV(LoadManually.intensitiesMathiasRight1, LoadManually.intensitiesMathiasRight2, variances2, false);
+					mdp1 = StatisticsComparation.MDP(LoadManually.intensitiesMathiasRight1, variances, means, false);
 //					mdp1 = Math.sqrt(mdp1);
-					mdp2 = StatisticsComparation.MDP(LoadMathias.intensitiesMathiasRight2, variances, means, false);
+					mdp2 = StatisticsComparation.MDP(LoadManually.intensitiesMathiasRight2, variances, means, false);
 //					mdp2 = Math.sqrt(mdp2);
 					mdpc = StatisticsComparation.MDPC(mdp1, ev, k);
 					//mdpc = Math.sqrt(mdpc);
@@ -1135,8 +1135,8 @@ public class MainOrganizing {
 				fw.write("SQ_total Prototype Right = "+sqtotal_prototype+"\n");
 				System.out.print(sqtotal_prototype[1]+",\n");
 			} else {
-				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight1, means, false);
-				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight2, means, false);
+				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(LoadManually.intensitiesMathiasRight1, means, false);
+				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(LoadManually.intensitiesMathiasRight2, means, false);
 				sqtotal_prototype[1] += (sqtotal_prototype_test1 + sqtotal_prototype_test2) / 2;
 				fw.write("SQ_total Prototype Right = "+sqtotal_prototype+"\n");
 				System.out.print(sqtotal_prototype[1]+",\n");
@@ -1202,8 +1202,8 @@ public class MainOrganizing {
 				fw.write("SQ_res Right = "+sqtotal_prototype+"\n");
 				System.out.print(sqtotal_prototype[1]+",\n");
 			} else if(!patient.equalsIgnoreCase("Dennis")) {
-				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), false);
-				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), false);
+				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(LoadManually.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), false);
+				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(LoadManually.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), false);
 				sqtotal_prototype[1] += (sqtotal_prototype_test1 + sqtotal_prototype_test2) / 2;
 				fw.write("SQ_res Right = "+sqtotal_prototype+"\n");
 				System.out.print(sqtotal_prototype[1]+",\n");
@@ -1270,8 +1270,8 @@ public class MainOrganizing {
 				fw.write("pearson correlation Right = "+pearson_correlation+"\n");
 				System.out.print(pearson_correlation[1]+",\n");
 			} else if(!patient.equalsIgnoreCase("Dennis")) {
-				pearson_correlation_test1 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), false);
-				pearson_correlation_test2 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), false);
+				pearson_correlation_test1 = StatisticsComparation.SQ_Total(LoadManually.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), false);
+				pearson_correlation_test2 = StatisticsComparation.SQ_Total(LoadManually.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), false);
 				pearson_correlation[1] += (pearson_correlation_test1 + pearson_correlation_test2);
 				fw.write("pearson correlation Right = "+pearson_correlation+"\n");
 				System.out.print(pearson_correlation[1]+",\n");
@@ -1342,8 +1342,8 @@ public class MainOrganizing {
 					plot(rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), rightReportHumphreyData.get(0).getNumericIntensities(), means1, means2, false, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
 					plot(rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), rightReportHumphreyData.get(1).getNumericIntensities(), means1, means2, false, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
 				} else if(!patient.equalsIgnoreCase("Dennis")) {
-					plot(LoadMathias.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), means1, means2, false, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
-					plot(LoadMathias.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), means1, means2, false, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
+					plot(LoadManually.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), means1, means2, false, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
+					plot(LoadManually.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), means1, means2, false, new String[] {"Protótipo", "Humphrey", "Média no protótipo", "Média no Humphrey"});
 				}
 				return;
 			}

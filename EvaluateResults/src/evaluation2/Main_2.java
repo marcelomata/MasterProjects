@@ -115,7 +115,7 @@ public class Main_2 {
 			
 			rightReportPrototypeData = getReportPrototypeData(reportsPrototypeByPatient.get(patient), EnumEye.RIGHT);
 			if(patient.equalsIgnoreCase("Mathias")) {
-				LoadMathias.calcReports();
+				LoadManually.calcReports();
 			} else {
 				if(rightReportPrototypeData.size() > 1) {
 					mse = StatisticsComparation.rootMeanSquareEror(rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble(), rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble(), true);
@@ -239,10 +239,10 @@ public class Main_2 {
 				fw.write("DM Prototype Right = "+dm+"\n");
 				System.out.println(dm+",");
 			} else {
-				dm = StatisticsComparation.DM(LoadMathias.intensitiesMathiasRight1, variances, means, false);
+				dm = StatisticsComparation.DM(LoadManually.intensitiesMathiasRight1, variances, means, false);
 				fw.write("DM Prototype Right = "+dm+"\n");
 				System.out.print(dm+",");
-				dm = StatisticsComparation.DM(LoadMathias.intensitiesMathiasRight2, variances, means, false);
+				dm = StatisticsComparation.DM(LoadManually.intensitiesMathiasRight2, variances, means, false);
 				fw.write("DM Prototype Right = "+dm+"\n");
 				System.out.println(dm+",");
 			}
@@ -369,11 +369,11 @@ public class Main_2 {
 				fw.write("MDP Prototype Right = "+mdp+"\n");
 				System.out.println(mdp+",");
 			} else {
-				mdp = StatisticsComparation.MDP(LoadMathias.intensitiesMathiasRight1, variances, means, false);
+				mdp = StatisticsComparation.MDP(LoadManually.intensitiesMathiasRight1, variances, means, false);
 				mdp = Math.sqrt(mdp);
 				fw.write("MDP Prototype Right = "+mdp+"\n");
 				System.out.print(mdp+",");
-				mdp = StatisticsComparation.MDP(LoadMathias.intensitiesMathiasRight2, variances, means, false);
+				mdp = StatisticsComparation.MDP(LoadManually.intensitiesMathiasRight2, variances, means, false);
 				mdp = Math.sqrt(mdp);
 				fw.write("MDP Prototype Right = "+mdp+"\n");
 				System.out.println(mdp+",");
@@ -504,7 +504,7 @@ public class Main_2 {
 				fw.write("EV Prototype Right = "+ev+"\n");
 				System.out.println(ev+",");					
 			} else {
-				ev = StatisticsComparation.EV(LoadMathias.intensitiesMathiasRight1, LoadMathias.intensitiesMathiasRight2, variances2, false);
+				ev = StatisticsComparation.EV(LoadManually.intensitiesMathiasRight1, LoadManually.intensitiesMathiasRight2, variances2, false);
 				ev = Math.sqrt(ev);
 				System.out.println(ev+",");
 			}
@@ -681,11 +681,11 @@ public class Main_2 {
 				fw.write("MDPC Prototype Right = "+mdpc+"\n");
 				System.out.println(mdpc+",");
 			} else {
-				ev = StatisticsComparation.EV(LoadMathias.intensitiesMathiasRight1, LoadMathias.intensitiesMathiasRight2, variances2, false);
+				ev = StatisticsComparation.EV(LoadManually.intensitiesMathiasRight1, LoadManually.intensitiesMathiasRight2, variances2, false);
 				ev = Math.sqrt(ev);
-				mdp1 = StatisticsComparation.MDP(LoadMathias.intensitiesMathiasRight1, variances, means, false);
+				mdp1 = StatisticsComparation.MDP(LoadManually.intensitiesMathiasRight1, variances, means, false);
 				mdp1 = Math.sqrt(mdp1);
-				mdp2 = StatisticsComparation.MDP(LoadMathias.intensitiesMathiasRight2, variances, means, false);
+				mdp2 = StatisticsComparation.MDP(LoadManually.intensitiesMathiasRight2, variances, means, false);
 				mdp2 = Math.sqrt(mdp2);
 				mdpc = StatisticsComparation.MDPC(mdp1, ev, k);
 				if(mdpc < 0) {

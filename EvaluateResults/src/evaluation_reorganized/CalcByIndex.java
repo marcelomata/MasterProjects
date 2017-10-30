@@ -17,12 +17,13 @@ public class CalcByIndex extends ComparisonAttributes {
 //		squareDiffsHumphrey = processCov(3);
 		boolean print = false;
 		int typeOfPrint = 0;
+		int side = 1;
 		Map<String, double[][][][]> fieldsMeasurements = getFields(1, print, typeOfPrint);
 //	    Object[] allDiffsArray = new Object[] {squareDiffsPrototype, squareDiffsHumphrey};
 //	    Object[] allDiffsArray = new Object[] {squareDiffsPrototype};
 //		Map<String, double[][][][]> squareDiffsAll = getAllSquareDiffs(allDiffsArray);
 //		PlotUtils.plotByFieldIndex(squareDiffsAll, 1, true);
-		PlotUtils.plotByFieldIndex(fieldsMeasurements, 2);
+		PlotUtils.plotByFieldIndex(fieldsMeasurements, 2, side);
 	}
 	
 	private static Map<String, double[][][]> processCov(int typeFields) throws IOException {

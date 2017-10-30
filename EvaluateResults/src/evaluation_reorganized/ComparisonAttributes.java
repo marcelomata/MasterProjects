@@ -9,7 +9,7 @@ import java.util.Set;
 
 import br.ufrgs.campimeter.examination.enums.EnumEye;
 import br.ufrgs.campimeter.examination.visualfield.file.LoaderVisualField;
-import evaluation2.LoadMathias;
+import evaluation2.LoadManually;
 import evaluation2.ReportData;
 import evaluation2.StatisticsComparation;
 
@@ -91,9 +91,9 @@ public class ComparisonAttributes {
 				leftReportHumphreyData.get(1).getNumericIntensities() : null;
 		
 		field_right_prototype_1 = rightReportPrototypeData.size() > 1 && rightReportHumphreyData.size() > 1 ? 
-						rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble() : LoadMathias.intensitiesMathiasRight1;
+						rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble() : LoadManually.intensitiesMathiasRight1;
 		field_right_prototype_2 = rightReportPrototypeData.size() > 1 && rightReportHumphreyData.size() > 1 ? 
-						rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble() : LoadMathias.intensitiesMathiasRight2;
+						rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble() : LoadManually.intensitiesMathiasRight2;
 		field_right_humphrey_1 = !isDennis ? rightReportHumphreyData.get(0).getNumericIntensities() : null;
 		field_right_humphrey_2 = !isDennis ? rightReportHumphreyData.get(1).getNumericIntensities() : null;
 		
@@ -208,6 +208,9 @@ public class ComparisonAttributes {
 //		setUpFieldsDevicesResult();
 //		setUpFieldsPrototypeAndProtMeans();
 		switch(typeFields) {
+			case 1 :
+				setUpFieldsDevicesResult();
+				break;
 			case 2 :
 				setUpFieldsPrototypeAndHumphreyMeans();
 				break;

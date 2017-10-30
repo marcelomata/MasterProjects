@@ -65,7 +65,8 @@ public class Utils {
 		return evaluationFile;
 	}
 	
-	public static Double[][][] getValuesByIndex(Map<String, double[][][][]> allFields, int index) {
+	public static Double[][][] getValuesByIndex(Map<String, double[][][][]> allFields, int index, int side) {
+		// side = 1 -> all sides - side = 2 -> left - side = 3 -> right 
 		char[][] map = Constants.MAP_LEFT;
 		int countIndex = 0;
 		int count = 0;
@@ -74,7 +75,8 @@ public class Utils {
 		double[][][] field = null;
 		double[][][][] fieldsAll = null;
 //		int numberPoints = Utils.getNumberValidPoints(map);
-		int numberOfPointsToPlot = keys.size()*4;
+		int sidesCount = (side == 1 ? 4 : 2);
+		int numberOfPointsToPlot = keys.size()*sidesCount;
 		Double [][]xDataTotal1 = new Double[2][numberOfPointsToPlot];
 		Double [][]yDataTotal1 = new Double[2][numberOfPointsToPlot];
 		int indexInsert = 0;
@@ -84,8 +86,8 @@ public class Utils {
 				for(int k = 0; k < fieldsAll.length; k++) {
 //					System.out.println("################");
 					field = fieldsAll[k];
-					countIntern = count*4;
-					for(int m = 0; m < field.length; m++) {
+					countIntern = count*sidesCount;
+					for(int m = (side == 1 ? 0 : side == 2 ? 0 : side == 3 ? 2 : 0); m < (side == 1 ? field.length : side == 2 ? 2 : field.length); m++) {
 						map = getMap(m);
 						countIndex = 0;
 						for (int i = 0; i < field[m].length; i++) {

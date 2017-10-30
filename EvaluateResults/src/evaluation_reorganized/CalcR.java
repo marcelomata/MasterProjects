@@ -10,7 +10,7 @@ import java.util.Set;
 
 import br.ufrgs.campimeter.examination.enums.EnumEye;
 import br.ufrgs.campimeter.examination.visualfield.file.LoaderVisualField;
-import evaluation2.LoadMathias;
+import evaluation2.LoadManually;
 import evaluation2.ReportData;
 import evaluation2.StatisticsComparation;
 
@@ -112,8 +112,8 @@ public class CalcR extends ComparisonAttributes {
 				fw.write("SQ_total Prototype Right = "+sqtotal_prototype+"\n");
 //				System.out.print(sqtotal_prototype[1]+",\n");
 			} else {
-				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight1, meansHumphrey, false);
-				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight2, meansHumphrey, false);
+				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(LoadManually.intensitiesMathiasRight1, meansHumphrey, false);
+				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(LoadManually.intensitiesMathiasRight2, meansHumphrey, false);
 				sqtotal_prototype[1] += (sqtotal_prototype_test1 + sqtotal_prototype_test2) / 2;
 				fw.write("SQ_total Prototype Right = "+sqtotal_prototype+"\n");
 //				System.out.print(sqtotal_prototype[1]+",\n");
@@ -173,8 +173,8 @@ public class CalcR extends ComparisonAttributes {
 				fw.write("SQ_res Right = "+sqtotal_prototype+"\n");
 //				System.out.print(sqtotal_prototype[1]+",\n");
 			} else if(!patient.equalsIgnoreCase("Dennis")) {
-				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), false);
-				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), false);
+				sqtotal_prototype_test1 = StatisticsComparation.SQ_Total(LoadManually.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), false);
+				sqtotal_prototype_test2 = StatisticsComparation.SQ_Total(LoadManually.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), false);
 				sqtotal_prototype[1] += (sqtotal_prototype_test1 + sqtotal_prototype_test2) / 2;
 				fw.write("SQ_res Right = "+sqtotal_prototype+"\n");
 //				System.out.print(sqtotal_prototype[1]+",\n");
@@ -240,8 +240,8 @@ public class CalcR extends ComparisonAttributes {
 				fw.write("pearson correlation Right = "+pearson_correlation+"\n");
 //				System.out.print(pearson_correlation[1]+",\n");
 			} else if(!patient.equalsIgnoreCase("Dennis")) {
-				pearson_correlation_test1 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), false);
-				pearson_correlation_test2 = StatisticsComparation.SQ_Total(LoadMathias.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), false);
+				pearson_correlation_test1 = StatisticsComparation.SQ_Total(LoadManually.intensitiesMathiasRight1, rightReportHumphreyData.get(0).getNumericIntensities(), false);
+				pearson_correlation_test2 = StatisticsComparation.SQ_Total(LoadManually.intensitiesMathiasRight2, rightReportHumphreyData.get(1).getNumericIntensities(), false);
 				pearson_correlation[1] += (pearson_correlation_test1 + pearson_correlation_test2);
 				fw.write("pearson correlation Right = "+pearson_correlation+"\n");
 //				System.out.print(pearson_correlation[1]+",\n");
