@@ -58,8 +58,7 @@ public class CalcOrders extends ComparisonAttributes {
 			}
 			
 			readDataDevices(respectiveHumphewyKey, patient);
-			boolean isDennis = patient.equalsIgnoreCase("Dennis");
-			setUpDevicesFields(leftReportPrototypeData, rightReportPrototypeData, leftReportHumphreyData, rightReportHumphreyData, isDennis);
+			setUpDevicesFields(leftReportPrototypeData, rightReportPrototypeData, leftReportHumphreyData, rightReportHumphreyData, PrototypeUtils.isPatientsManually(patient));
 			setUpFieldsDevicesResult();
 //			setUpFieldsPrototypeAndProtMeans();
 //			setUpFieldsPrototypeMeansHumphreyMeans();

@@ -1,18 +1,12 @@
 package evaluation_reorganized;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Map;
 
 import evaluation2.StatisticalMatrix;
 
 public class CalcCovariance extends ComparisonAttributes {
 
-	/*
 	public static void main(String[] args) throws IOException {
 		int numberOfIndex = Utils.getNumberOfIndex();
 		boolean print = true;
@@ -32,7 +26,6 @@ public class CalcCovariance extends ComparisonAttributes {
 //			PlotUtils.plotByFieldIndex(getFields(indexToPlot[i], print, typeOfPrint), indexToPlot[i], side);
 //		}
 	}
-	*/
 	
 	public static double getCorrelationByIndex(Map<String, double[][][][]> squareDiffs, int index, int side) {
 		Double [][][]valuesByIndex = Utils.getValuesByIndex(squareDiffs, index, side);
@@ -46,51 +39,6 @@ public class CalcCovariance extends ComparisonAttributes {
 		double [][]covarianceMatrix = StatisticalMatrix.getCovarianceMatrix(xVariance);
 		double correlation = StatisticalMatrix.getCorrelation2D(covarianceMatrix);
 		return correlation;
-	}
-	
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File("/home/cin_moliveira/Downloads/gtemp/master/reports/humphrey_measurements_bernardo.txt"))));
-	    double [][]field = new double[10][10];
-	    boolean left = false;
-	    int countNumbers = 0;
-	    int startPosSplit = 0;
-	    int startPos = 0;
-	    int lineIndex = 1;
-		while(br.ready()) {
-//			System.out.println(left ? "Esquedo" : "Direito");
-			countNumbers = 0;
-			String line = br.readLine();
-			String lineSplit[] = line.split("\t");
-			if(lineSplit.length > 1) {
-				countNumbers = countNumbers(lineSplit);
-				startPosSplit = lineSplit.length - countNumbers;
-				startPos = 10 - (10 - countNumbers) - 1;
-				for (int i = startPosSplit; i < lineSplit.length; i++) {
-					field[lineIndex][startPos] = Float.parseFloat(lineSplit[i]);
-				}
-				lineIndex++;
-			} else if(lineSplit.length == 1) {
-				lineIndex = 1;
-				left = !left;
-			} else {
-				lineIndex = 1;
-				continue;
-			}
-			System.out.println();
-		}
-	}
-	
-	public static int countNumbers(String[] lineSplit) {
-		int count = 0;
-		for (int i = 0; i < lineSplit.length; i++) {
-			try {
-				Float.parseFloat(lineSplit[i]);
-				count++;
-			} catch (Exception e) {
-
-			}
-		}
-		return count;
 	}
 	
 }

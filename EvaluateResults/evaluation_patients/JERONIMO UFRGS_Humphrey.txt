@@ -1,4 +1,4 @@
-MDP Humphrey Left = 1.13
 MDP Humphrey Left = 1.27
-MDP Humphrey Right = 1.15
+MDP Humphrey Left = 1.13
 MDP Humphrey Right = 1.51
+MDP Humphrey Right = 1.15

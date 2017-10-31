@@ -22,6 +22,9 @@ public class ComparisonAttributes {
 	protected static List<LoaderVisualField> reportsPrototypeData;
 	protected static double[][] means;
 	protected static double[][] meansHumphrey;
+	protected static double[][] variancePrototype;
+	protected static double[][] variancePrototype2;
+	protected static double[][] varianceHumphrey2;
 	protected static Map<String, List<ReportData>> reportsHumphreyByPatient;
 	protected static Map<String, List<LoaderVisualField>> reportsPrototypeByPatient;
 	protected static Set<String> keysHumphrey;
@@ -52,10 +55,10 @@ public class ComparisonAttributes {
 	protected static double[][] field2_right_1 = null;
 	protected static double[][] field2_right_2 = null;
 	
+	
 	protected static void loadAllData(String respectiveHumphreyKey, String patient) {
 		readDataDevices(respectiveHumphreyKey, patient);
-		boolean isDennis = patient.equalsIgnoreCase("Dennis");
-		setUpDevicesFields(leftReportPrototypeData, rightReportPrototypeData, leftReportHumphreyData, rightReportHumphreyData, isDennis);
+		setUpDevicesFields(leftReportPrototypeData, rightReportPrototypeData, leftReportHumphreyData, rightReportHumphreyData, PrototypeUtils.isPatientsManually(patient));
 	}
 	
 	protected static void setUpAttributes() {
@@ -70,6 +73,10 @@ public class ComparisonAttributes {
 		means = StatisticsComparation.getMeans(reportsPrototypeData);
 		meansHumphrey = StatisticsComparation.getMeansHumphrey(reportsHumphreyData);
 		
+		variancePrototype = StatisticsComparation.getVariances(reportsPrototypeData, means);
+		variancePrototype2 = StatisticsComparation.getVariances2(reportsPrototypeData, means);
+		varianceHumphrey2 = StatisticsComparation.getVariances2Humphrey(reportsHumphreyData, means);
+		
 		reportsHumphreyByPatient = HumphreyUtils.getReportsHumphreyByPatient(reportsHumphreyData);
 		reportsPrototypeByPatient = PrototypeUtils.getReportsPrototypeByPatient(reportsPrototypeData);
 		
@@ -79,23 +86,21 @@ public class ComparisonAttributes {
 	
 	protected static void setUpDevicesFields(List<LoaderVisualField> leftReportPrototypeData,
 			List<LoaderVisualField> rightReportPrototypeData, List<ReportData> leftReportHumphreyData,
-			List<ReportData> rightReportHumphreyData, boolean isDennis) {
+			List<ReportData> rightReportHumphreyData, boolean isManualPrototype) {
 		
-		field_left_prototype_1 = leftReportPrototypeData.size() > 1 && leftReportHumphreyData.size() > 1 && !isDennis ? 
-				leftReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble() : null;
-		field_left_prototype_2 = leftReportPrototypeData.size() > 1 && leftReportHumphreyData.size() > 1 && !isDennis ? 
-				leftReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble() : null;
-		field_left_humphrey_1 = leftReportPrototypeData.size() > 1 && leftReportHumphreyData.size() > 1 && !isDennis ? 
-				leftReportHumphreyData.get(0).getNumericIntensities() : null;
-		field_left_humphrey_2 = leftReportPrototypeData.size() > 1 && leftReportHumphreyData.size() > 1 && !isDennis ? 
-				leftReportHumphreyData.get(1).getNumericIntensities() : null;
+		field_left_prototype_1 = isManualPrototype ? leftReportPrototypeData.get(0).getParameters().getIntensities() : leftReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble();
+		field_left_prototype_2 = isManualPrototype ? leftReportPrototypeData.get(1).getParameters().getIntensities() : leftReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble();
+		field_left_humphrey_1 = leftReportHumphreyData.get(0).getNumericIntensities();
+		field_left_humphrey_2 = leftReportHumphreyData.get(1).getNumericIntensities();
 		
 		field_right_prototype_1 = rightReportPrototypeData.size() > 1 && rightReportHumphreyData.size() > 1 ? 
-						rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble() : LoadManually.intensitiesMathiasRight1;
+						isManualPrototype ? rightReportPrototypeData.get(0).getParameters().getIntensities() : 
+							rightReportPrototypeData.get(0).getParameters().getIntensitiesAsDouble() : LoadManually.intensitiesMathiasRight1;
 		field_right_prototype_2 = rightReportPrototypeData.size() > 1 && rightReportHumphreyData.size() > 1 ? 
-						rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble() : LoadManually.intensitiesMathiasRight2;
-		field_right_humphrey_1 = !isDennis ? rightReportHumphreyData.get(0).getNumericIntensities() : null;
-		field_right_humphrey_2 = !isDennis ? rightReportHumphreyData.get(1).getNumericIntensities() : null;
+						isManualPrototype ? rightReportPrototypeData.get(1).getParameters().getIntensities() : 
+							rightReportPrototypeData.get(1).getParameters().getIntensitiesAsDouble() : LoadManually.intensitiesMathiasRight2;
+		field_right_humphrey_1 = rightReportHumphreyData.get(0).getNumericIntensities();
+		field_right_humphrey_2 = rightReportHumphreyData.get(1).getNumericIntensities();
 		
 	}
 	

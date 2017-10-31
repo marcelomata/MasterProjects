@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 public class ReportData {
@@ -58,6 +61,12 @@ public class ReportData {
 		} else {
 			reportTxt = txtFile;
 		}
+	}
+
+	public ReportData(String patientName, double [][] intensities, String eyeSide) {
+		this.patientName = patientName;
+		this.intensities = intensities;
+		this.eyeSide = eyeSide;
 	}
 
 	public int getAge() {
@@ -147,7 +156,6 @@ public class ReportData {
 	
 	public void loadDataFromTxt() {
 		BufferedReader in;
-		String line;
 		try {
 			in = new BufferedReader(new FileReader(reportTxt));
 			reportOk = in.readLine().charAt(0) == 'y' ? true : false;
@@ -163,6 +171,7 @@ public class ReportData {
 				PSD = Double.parseDouble(in.readLine());
 				GHT = in.readLine();
 				intensities = readArray(in);
+				
 				totalDeviation = readArray(in);
 				totalDeviationPercent = readArray(in);
 				modelDeviation = readArray(in);
@@ -174,12 +183,114 @@ public class ReportData {
 				hour = in.readLine();
 				duration = in.readLine();
 				date = in.readLine();
+			} else {
+				System.out.println(reportTxt);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+		
+	public static List<String> getPatientsManually() {
+		List<String> patientsManual = new ArrayList<String>();
+		patientsManual.add("Lizeth");
+		patientsManual.add("Bernardo");
+		patientsManual.add("Jose");
+		patientsManual.add("Dennis");
+		patientsManual.add("Vinicius M");
+		return patientsManual;
+	}
+	
+	public static boolean isPatientsManually(String patient) {
+		List<String> patientsManual = getPatientsManually();
+		for (String string : patientsManual) {
+			if(patient.toLowerCase().contains(string.toLowerCase())) return true;
+		}
+		return false;
+	}
+	
+	public static void addManualPatient(Map<String, List<ReportData>> reportsByPatient) {
+		List<String> patients = getPatientsManually();
+		for (int i = 0; i < patients.size(); i++) {
+			reportsByPatient.put(patients.get(i), new ArrayList<ReportData>());
+			for (int j = 0; j < 4; j++) {
+				reportsByPatient.get(patients.get(i)).add(new ReportData(patients.get(i), getIntensitiesByPatient(patients.get(i), j), j < 2 ? "Esquerdo" : "Direito"));
+			}
+		}
+	}
+	
+	public static List<ReportData> getManualPatients() {
+		List<ReportData> reports = new ArrayList<ReportData>();
+		List<String> patients = getPatientsManually();
+		for (int i = 0; i < patients.size(); i++) {
+			for (int j = 0; j < 4; j++) {
+				reports.add(new ReportData(patients.get(i), getIntensitiesByPatient(patients.get(i), j), j < 2 ? "Esquerdo" : "Direito"));
+			}
+		}
+		return reports;
+	}
+	
+	public static double[][] getIntensitiesByPatient(String patient, int field) {
+		if(patient.toLowerCase().contains("lizeth" )) {
+			switch (field) {
+				case 0:
+					return LoadManually.intensitiesLizethHumphreyLeft1;
+				case 1:
+					return LoadManually.intensitiesLizethHumphreyLeft2;
+				case 2:
+					return LoadManually.intensitiesLizethHumphreyRight1;
+				case 3:
+					return LoadManually.intensitiesLizethHumphreyRight2;
+			}
+		} else if(patient.toLowerCase().contains("bernardo" )) {
+			switch (field) {
+				case 0:
+					return LoadManually.intensitiesBernardoHumphreyLeft1;
+				case 1:
+					return LoadManually.intensitiesBernardoHumphreyLeft2;
+				case 2:
+					return LoadManually.intensitiesBernardoHumphreyRight1;
+				case 3:
+					return LoadManually.intensitiesBernardoHumphreyRight2;
+			}
+		} else if(patient.toLowerCase().contains("dennis")) {
+			switch (field) {
+				case 0:
+					return LoadManually.intensitiesDennisHumphreyLeft1;
+				case 1:
+					return LoadManually.intensitiesDennisHumphreyLeft2;
+				case 2:
+					return LoadManually.intensitiesDennisHumphreyRight1;
+				case 3:
+					return LoadManually.intensitiesDennisHumphreyRight2;
+			}
+		} else if(patient.toLowerCase().contains("jose")) {
+			switch (field) {
+				case 0:
+					return LoadManually.intensitiesJoseHumphreyLeft1;
+				case 1:
+					return LoadManually.intensitiesJoseHumphreyLeft2;
+				case 2:
+					return LoadManually.intensitiesJoseHumphreyRight1;
+				case 3:
+					return LoadManually.intensitiesJoseHumphreyRight2;
+			}
+		} else if(patient.toLowerCase().contains("vinicius m")) {
+			switch (field) {
+			case 0:
+				return LoadManually.intensitiesViniciusMHumphreyLeft1;
+			case 1:
+				return LoadManually.intensitiesViniciusMHumphreyLeft2;
+			case 2:
+				return LoadManually.intensitiesViniciusMHumphreyRight1;
+			case 3:
+				return LoadManually.intensitiesViniciusMHumphreyRight2;
+			}
+		}
+		
+		return null;
 	}
 
 	private double[][] readArray(BufferedReader in) {

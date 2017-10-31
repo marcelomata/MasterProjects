@@ -13,21 +13,24 @@ public class HumphreyUtils {
 
 	public static Map<String, List<ReportData>> getReportsHumphreyByPatient(List<ReportData> reportsData) {
 		
-		Map<String, List<ReportData>> reportsByAge = new HashMap<String, List<ReportData>>(); 
+		Map<String, List<ReportData>> reportsByPatient = new HashMap<String, List<ReportData>>(); 
 		
 		String patient;
 		List<ReportData> reports;
 		for(ReportData data : reportsData) {
 			patient = data.getPatientName();
-			reports = reportsByAge.get(patient);
+			patient = patient.replaceAll("UFRGS", "").replaceAll("1", "").trim();
+			reports = reportsByPatient.get(patient);
 			if(reports == null) {
 				reports = new ArrayList<ReportData>();
-				reportsByAge.put(patient, reports);
+				reportsByPatient.put(patient, reports);
 			}
 			reports.add(data);
 		}
 		
-		return reportsByAge;
+//		ReportData.addManualPatient(reportsByPatient);
+		
+		return reportsByPatient;
 	}
 
 	public static List<ReportData> loadReportsHumphrey(File sampleDir) {
@@ -50,9 +53,11 @@ public class HumphreyUtils {
 			}
 		}
 		
+		reportsData.addAll(ReportData.getManualPatients());
+		
 		return reportsData;
 	}
-	
+
 	public static List<ReportData> getReportHumphreyData(List<ReportData> reports, char side) {
 		List<ReportData> leftReportData = new ArrayList<ReportData>();
 		for (ReportData reportData : reports) {
