@@ -12,7 +12,7 @@ public class CalcCovariance extends ComparisonAttributes {
 		boolean print = true;
 		int typeOfPrint = 1;
 		int typeOfField = 1;
-		int side = 1;
+		int side = 3;
 		getFields(49, print,typeOfPrint);
 		print = false;
 		for (int index = 1; index <= numberOfIndex; index++) {

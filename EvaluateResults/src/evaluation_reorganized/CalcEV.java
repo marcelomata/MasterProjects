@@ -68,8 +68,6 @@ public class CalcEV extends ComparisonAttributes {
 			ev_left_humphrey = Math.sqrt(StatisticsComparation.EV(field2_left_1, field2_left_2, varianceHumphrey2, true));
 			ev_right_humphrey = Math.sqrt(StatisticsComparation.EV(field2_right_1, field2_right_2, varianceHumphrey2, false));
 			
-	//		FileUtils.saveResultOnFile(ratio_left_1, ratio_left_2, ratio_right_1, ratio_right_2, evaluationFile);
-	
 			evs[0][0] = ev_left_prototype; 
 			evs[0][1] = ev_right_prototype;
 			evs[1][0] = ev_left_humphrey;

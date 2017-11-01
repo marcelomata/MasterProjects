@@ -445,7 +445,6 @@ public class StatisticsComparation {
 		
 		double difference;
 		double [][]intensities;
-		int count = 0;
 		for (LoaderVisualField report : reportsPrototypeData) {
 			if(report instanceof VisualFieldFileLoaderV1_0) {
 				intensities = report.getParameters().getIntensitiesAsDouble();
@@ -458,7 +457,6 @@ public class StatisticsComparation {
 					variances[i][j] += (difference * difference);
 				}
 			}
-			count++;
 		}
 		
 		means = normalize(variances, reportsPrototypeData.size()-1);
