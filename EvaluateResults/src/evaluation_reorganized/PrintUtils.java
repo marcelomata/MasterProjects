@@ -10,6 +10,21 @@ public class PrintUtils {
 			System.out.println();
 		}
 	}
+	
+	public static void printFieldAsArrayVariable(double[][] intensitiesAsDouble, String name) {
+		System.out.println("public static double[][] " + name + " = {");
+		for (int i = 0; i < intensitiesAsDouble.length; i++) {
+			System.out.print("{");
+			for (int j = 0; j < intensitiesAsDouble[i].length; j++) {
+				System.out.print(intensitiesAsDouble[i][j]);
+				if(j < intensitiesAsDouble[i].length - 1) {
+					System.out.print(", ");
+				}
+			}
+			System.out.println("},");
+		}
+		System.out.println("};");
+	}
 
 	public static void printSeparator() {
 		System.out.println("##########################");

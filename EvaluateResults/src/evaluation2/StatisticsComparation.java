@@ -325,7 +325,7 @@ public class StatisticsComparation {
 	public static double[][] getMeans(List<LoaderVisualField> reportsPrototypeData) {
 		double[][] means = new double[10][10];
 		
-		int count = reportsPrototypeData.size();
+		int counts[][] = new int[10][10];
 		double [][]intensities;
 		for (LoaderVisualField report : reportsPrototypeData) {
 			if(report instanceof VisualFieldFileLoaderV1_0) {
@@ -338,11 +338,12 @@ public class StatisticsComparation {
 			for (int i = 0; i < means.length; i++) {
 				for (int j = 0; j < means[i].length; j++) {
 					means[i][j] += intensities[i][j];
+					counts[i][j]++;
 				}
 			}
 		}
 		
-		means = normalize(means, count);
+		means = normalize(means, counts, false);
 		
 		return means;
 	}
@@ -445,6 +446,7 @@ public class StatisticsComparation {
 		
 		double difference;
 		double [][]intensities;
+		int counts[][] = new int[10][10];
 		for (LoaderVisualField report : reportsPrototypeData) {
 			if(report instanceof VisualFieldFileLoaderV1_0) {
 				intensities = report.getParameters().getIntensitiesAsDouble();
@@ -455,15 +457,31 @@ public class StatisticsComparation {
 				for (int j = 0; j < variances[i].length; j++) {
 					difference = intensities[i][j] - means[i][j];
 					variances[i][j] += (difference * difference);
+					counts[i][j]++;
 				}
 			}
 		}
 		
-		means = normalize(variances, reportsPrototypeData.size()-1);
+		variances = normalize(variances, counts, true);
 		
 		return variances;
 	}
 	
+	private static double[][] normalize(double[][] values, int[][] counts, boolean variance) {
+		double[][] normalized = new double[values.length][values[0].length];
+		
+		for (int i = 0; i < values.length; i++) {
+			for (int j = 0; j < values[i].length; j++) {
+				if(values[i][j] > 0) {
+					normalized[i][j] = values[i][j] / (variance ? (counts[i][j]) : counts[i][j]);
+				}
+			}
+		}
+		
+		return normalized;
+	}
+
+
 	public static double[][] normalize(double[][]values, int total) {
 		double[][] normalized = new double[values.length][values[0].length];
 		
