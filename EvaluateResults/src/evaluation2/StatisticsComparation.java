@@ -86,7 +86,8 @@ public class StatisticsComparation {
 		double value;
 		for (int i = 0; i < field1.length; i++) {
 			for (int j = 0; j < field1[i].length; j++) {
-				if(map[i][j] == 'y' && Math.abs(field1[i][j] - means[i][j]) < 10) {
+				if(map[i][j] == 'y' && Math.abs(field1[i][j] - means[i][j] - dm) < 10) {
+//				if(map[i][j] == 'y') {
 					value = (field1[i][j] - means[i][j] - dm);
 					error1 += variances[i][j];
 					error2 += ((value*value) / variances[i][j]);
@@ -95,9 +96,10 @@ public class StatisticsComparation {
 				}
 			}
 		}
+		System.out.println(count);
 		error1 /= count;
 		error2 /= (count - 1);
-		//error2 /= count;
+//		error2 /= count+5;
 		
 //		System.out.println(error2);
 		
